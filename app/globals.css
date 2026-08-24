@@ -1,0 +1,672 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   G-SCALE INTERNATIONAL — DESIGN SYSTEM
+   Language: institutional editorial. Sharp corners, hairline rules,
+   enormous display type, crimson as signal rather than decoration.
+   Palette is fixed — nine brand colours, no others. Depth and
+   texture come from alpha, scale, and rhythm, never from new hues.
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Brand palette (fixed) ─────────────────────────────────── */
+  --color-paper: #ffffff;
+  --color-tint: #f5f5f3;
+  --color-ink: #111111;
+  --color-soot: #333333;
+  --color-stone: #676767;
+  --color-midnight: #151515;
+  --color-coal: #222222;
+  --color-crimson: #bd1622;
+  --color-crimson-deep: #920c16;
+
+  /* ── Type scale ────────────────────────────────────────────── */
+  --text-mega: clamp(3.4rem, 1.2rem + 8.4vw, 10.5rem);
+  --text-mega--line-height: 0.86;
+  --text-mega--letter-spacing: -0.055em;
+
+  --text-hero: clamp(2.9rem, 1.4rem + 5.2vw, 6.4rem);
+  --text-hero--line-height: 0.93;
+  --text-hero--letter-spacing: -0.05em;
+
+  --text-display: clamp(2.4rem, 1.5rem + 3.2vw, 4.4rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.045em;
+
+  --text-headline: clamp(1.85rem, 1.35rem + 1.9vw, 3rem);
+  --text-headline--line-height: 1.03;
+  --text-headline--letter-spacing: -0.038em;
+
+  --text-title: clamp(1.3rem, 1.1rem + 0.7vw, 1.75rem);
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.03em;
+
+  --text-lead: clamp(1.05rem, 0.98rem + 0.35vw, 1.28rem);
+  --text-lead--line-height: 1.6;
+
+  /* ── Motion ────────────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* ── Layout constants ──────────────────────────────────────── */
+  --nav-h: 72px;
+
+  --animate-marquee: marquee 46s linear infinite;
+  --animate-marquee-slow: marquee 90s linear infinite;
+}
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-body), sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, "SF Mono", monospace;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ═══ Diagram motion ════════════════════════════════════════════
+   Used by components/visuals/diagrams.tsx. All of it is switched
+   off by the reduced-motion block at the foot of this file.       */
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit-slow {
+  animation: orbit-spin 90s linear infinite;
+}
+
+.orbit-slow-reverse {
+  animation: orbit-spin 64s linear infinite reverse;
+}
+
+@keyframes node-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.45; }
+  50%      { transform: scale(1.45); opacity: 0; }
+}
+
+.node-pulse {
+  animation: node-pulse 3.4s var(--ease-out-expo) infinite;
+}
+
+/* Chords draw themselves in on load. */
+@keyframes chord-draw {
+  from { stroke-dashoffset: 1000; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+
+.chord-draw {
+  stroke-dasharray: 1000;
+  animation: chord-draw 2.2s var(--ease-out-expo) both;
+}
+
+/* Flow lines run continuously toward the arrowhead. */
+@keyframes flow-dash {
+  from { stroke-dashoffset: 44; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.flow-dash {
+  stroke-dasharray: 6 6;
+  animation: flow-dash 1.6s linear infinite;
+}
+
+@keyframes block-lift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+.block-lift {
+  animation: block-lift 5s var(--ease-in-out-quart) infinite;
+}
+
+/* ═══ Base ══════════════════════════════════════════════════════ */
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 24px);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-crimson);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-crimson);
+  outline-offset: 3px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* ═══ Layout ════════════════════════════════════════════════════ */
+
+.container-x {
+  @apply mx-auto w-full max-w-[1560px] px-5 sm:px-8 lg:px-14 xl:px-20;
+}
+
+/* Narrow measure for long-form reading. */
+.measure {
+  max-width: 68ch;
+}
+
+/* ═══ Texture primitives — brand alpha only ═════════════════════ */
+
+/* Faint vertical column grid. Anchors big type to an implied structure. */
+.grid-rule {
+  position: relative;
+  isolation: isolate;
+}
+
+.grid-rule::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgb(17 17 17 / 0.055) 0 1px,
+    transparent 1px calc(100% / 6)
+  );
+}
+
+.grid-rule-light::before {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgb(255 255 255 / 0.07) 0 1px,
+    transparent 1px calc(100% / 6)
+  );
+}
+
+/* Diagonal crimson hairline hatching for accent panels. */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgb(189 22 34 / 0.09) 0 1px,
+    transparent 1px 9px
+  );
+}
+
+.hatch-ink {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgb(17 17 17 / 0.07) 0 1px,
+    transparent 1px 9px
+  );
+}
+
+/* Fine grain over dark blocks so midnight never reads as flat plastic.
+   Inline SVG turbulence — no network request, no extra colour. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Behind the copy but above the ground. Every `.grain` user also sets
+     `isolate`, so -1 stays inside that element's stacking context. */
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.34'/%3E%3C/svg%3E");
+}
+
+/* Deep crimson bloom — signal warmth on dark ground. */
+.bloom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    62% 78% at 82% 8%,
+    rgb(146 12 22 / 0.42) 0%,
+    transparent 62%
+  );
+}
+
+/* ═══ Eyebrow / metadata ════════════════════════════════════════ */
+
+.eyebrow {
+  @apply font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-stone;
+}
+
+.eyebrow-crimson {
+  @apply font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-crimson;
+}
+
+.eyebrow-light {
+  @apply font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/55;
+}
+
+/* Eyebrow with a leading crimson tick. */
+.eyebrow-tick {
+  @apply flex items-center gap-3;
+}
+
+.eyebrow-tick::before {
+  content: "";
+  @apply h-px w-8 shrink-0 bg-crimson;
+}
+
+/* Accent word on a dark ground.
+   Crimson type on midnight tops out at 2.9:1, which misses AA even for
+   display sizes — no brand colour is light enough to fix it. Inverting to
+   white on a crimson block reaches 6.4:1 and reads harder anyway. */
+.mark {
+  @apply bg-crimson text-white;
+  padding: 0 0.16em 0.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Editorial index numeral: 01 / 02 / 03 */
+.numeral {
+  @apply font-mono text-[11px] font-medium tabular-nums tracking-[0.14em] text-crimson;
+}
+
+/* Crimson on midnight only reaches ~2.9:1, which fails AA at this size,
+   so numerals switch to white on dark grounds. Crimson stays the accent
+   for rules and marks, which are not text. */
+.numeral-light {
+  @apply text-white/75;
+}
+
+/* ═══ Buttons ═══════════════════════════════════════════════════ */
+
+.btn,
+.btn-primary,
+.btn-light,
+.btn-outline-dark,
+.btn-outline-light {
+  @apply relative inline-flex min-h-[48px] cursor-pointer select-none items-center
+    justify-center gap-2.5 overflow-hidden whitespace-nowrap px-7 text-[13px]
+    font-semibold tracking-[0.01em];
+  transition:
+    color 0.4s var(--ease-out-expo),
+    border-color 0.4s var(--ease-out-expo),
+    background-color 0.4s var(--ease-out-expo);
+}
+
+/* Sweep fill on hover — the one shared button motion across the site. */
+.btn-primary::after,
+.btn-light::after,
+.btn-outline-dark::after,
+.btn-outline-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.btn-primary:hover::after,
+.btn-light:hover::after,
+.btn-outline-dark:hover::after,
+.btn-outline-light:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-primary > *,
+.btn-light > *,
+.btn-outline-dark > *,
+.btn-outline-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-primary {
+  @apply bg-crimson text-white;
+}
+
+.btn-primary::after {
+  background: var(--color-crimson-deep);
+}
+
+.btn-light {
+  @apply bg-white text-ink;
+}
+
+.btn-light::after {
+  background: var(--color-tint);
+}
+
+.btn-outline-dark {
+  @apply border border-ink/25 text-ink hover:text-white;
+}
+
+.btn-outline-dark::after {
+  background: var(--color-ink);
+}
+
+.btn-outline-light {
+  @apply border border-white/30 text-white hover:text-ink;
+}
+
+.btn-outline-light::after {
+  background: #fff;
+}
+
+.btn-sm {
+  @apply min-h-[42px] px-5 text-[12.5px];
+}
+
+/* ═══ Links ═════════════════════════════════════════════════════ */
+
+.link-arrow {
+  @apply inline-flex items-center gap-2 text-[13px] font-semibold tracking-[0.01em] text-crimson;
+}
+
+.link-arrow svg {
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.link-arrow:hover svg {
+  transform: translateX(5px);
+}
+
+/* Underline that redraws from the left. */
+.link-rule {
+  @apply relative inline-block;
+}
+
+.link-rule::after {
+  content: "";
+  @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-crimson;
+  transition: transform 0.45s var(--ease-out-expo);
+}
+
+.link-rule:hover::after {
+  @apply origin-left scale-x-100;
+}
+
+/* ═══ Surfaces ══════════════════════════════════════════════════ */
+
+/* A real bordered panel — all four sides, sharp corners. */
+.panel {
+  @apply border border-ink/12 bg-white;
+  transition:
+    border-color 0.45s var(--ease-out-expo),
+    background-color 0.45s var(--ease-out-expo),
+    transform 0.45s var(--ease-out-expo);
+}
+
+.panel-hover:hover {
+  @apply border-ink/35;
+  transform: translateY(-3px);
+}
+
+.panel-dark {
+  @apply border border-white/12 bg-coal;
+  transition:
+    border-color 0.45s var(--ease-out-expo),
+    transform 0.45s var(--ease-out-expo);
+}
+
+.panel-dark.panel-hover:hover {
+  @apply border-white/30;
+}
+
+/* Accent panel — crimson-tinted call to action. */
+.panel-accent {
+  @apply border border-crimson/25 bg-crimson/[0.045];
+}
+
+/* Row-based editorial list — the site's signature component. */
+.row-list {
+  @apply border-t border-ink/15;
+}
+
+.row-item {
+  @apply relative block border-b border-ink/15;
+}
+
+/* Crimson wash wipes in from the left on hover. */
+.row-item::before {
+  content: "";
+  @apply pointer-events-none absolute inset-y-0 left-0 right-0 origin-left scale-x-0 bg-crimson/[0.035];
+  transition: transform 0.55s var(--ease-out-expo);
+}
+
+.row-item:hover::before {
+  @apply scale-x-100;
+}
+
+.row-item > * {
+  position: relative;
+}
+
+.row-list-light {
+  @apply border-t border-white/18;
+}
+
+.row-item-light {
+  @apply relative block border-b border-white/18;
+  transition: background-color 0.45s var(--ease-out-expo);
+}
+
+.row-item-light:hover {
+  @apply bg-white/[0.04];
+}
+
+/* ═══ Forms ═════════════════════════════════════════════════════ */
+
+.field-label {
+  @apply mb-2.5 block font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-stone;
+}
+
+.field-input {
+  @apply w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-[15px]
+    text-ink placeholder:text-stone/70;
+  transition: border-color 0.35s var(--ease-out-expo);
+}
+
+.field-input:focus {
+  @apply border-crimson outline-none;
+}
+
+textarea.field-input {
+  @apply resize-y;
+}
+
+select.field-input {
+  @apply cursor-pointer appearance-none bg-[position:right_0.25rem_center] bg-no-repeat pr-8;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 12 8'%3E%3Cpath fill='%23bd1622' d='M6 8 0 .8h12L6 8Z'/%3E%3C/svg%3E");
+}
+
+/* ═══ Lists ═════════════════════════════════════════════════════ */
+
+.tick-list li {
+  @apply relative pl-7 leading-[1.65];
+}
+
+.tick-list li::before {
+  content: "";
+  @apply absolute left-0 top-[0.72em] h-px w-3.5 bg-crimson;
+}
+
+/* ═══ Reveal animation ══════════════════════════════════════════ */
+
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo),
+    clip-path 1s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal[data-variant="up"] {
+  transform: translate3d(0, 26px, 0);
+}
+
+.reveal[data-variant="fade"] {
+  transform: none;
+}
+
+.reveal[data-variant="left"] {
+  transform: translate3d(-26px, 0, 0);
+}
+
+.reveal[data-variant="right"] {
+  transform: translate3d(26px, 0, 0);
+}
+
+.reveal[data-variant="scale"] {
+  transform: scale(0.96);
+}
+
+/* Headline wipe — type is unveiled rather than faded. */
+.reveal[data-variant="wipe"] {
+  opacity: 1;
+  clip-path: inset(0 0 105% 0);
+  transform: none;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 -20% 0);
+}
+
+/* Children stagger in sequence off a single observer. */
+.stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.85s var(--ease-out-expo),
+    transform 0.85s var(--ease-out-expo);
+}
+
+.stagger.is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+.stagger.is-visible > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+.stagger.is-visible > *:nth-child(2) {
+  transition-delay: 70ms;
+}
+.stagger.is-visible > *:nth-child(3) {
+  transition-delay: 140ms;
+}
+.stagger.is-visible > *:nth-child(4) {
+  transition-delay: 210ms;
+}
+.stagger.is-visible > *:nth-child(5) {
+  transition-delay: 280ms;
+}
+.stagger.is-visible > *:nth-child(6) {
+  transition-delay: 350ms;
+}
+.stagger.is-visible > *:nth-child(7) {
+  transition-delay: 420ms;
+}
+.stagger.is-visible > *:nth-child(8) {
+  transition-delay: 490ms;
+}
+.stagger.is-visible > *:nth-child(n + 9) {
+  transition-delay: 560ms;
+}
+
+/* ═══ Marquee ═══════════════════════════════════════════════════ */
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+}
+
+.pause-on-hover:hover [class*="animate-marquee"] {
+  animation-play-state: paused;
+}
+
+/* ═══ Media ═════════════════════════════════════════════════════ */
+
+.media-cover {
+  @apply absolute inset-0 h-full w-full object-cover;
+}
+
+.media-frame {
+  @apply relative overflow-hidden bg-midnight;
+}
+
+/* Scrims so white type always clears contrast over moving media. */
+.media-scrim::after {
+  content: "";
+  @apply pointer-events-none absolute inset-0;
+  background: linear-gradient(
+    to top,
+    rgb(21 21 21 / 0.88) 0%,
+    rgb(21 21 21 / 0.45) 38%,
+    rgb(21 21 21 / 0.22) 100%
+  );
+}
+
+.media-scrim-side::after {
+  content: "";
+  @apply pointer-events-none absolute inset-0;
+  background: linear-gradient(
+    to right,
+    rgb(21 21 21 / 0.92) 0%,
+    rgb(21 21 21 / 0.62) 42%,
+    rgb(21 21 21 / 0.25) 100%
+  );
+}
+
+/* ═══ Scroll progress ═══════════════════════════════════════════ */
+
+.scroll-progress {
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  transition: transform 0.12s linear;
+}
+
+/* ═══ Reduced motion ════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .stagger > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
