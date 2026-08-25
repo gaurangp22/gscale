@@ -47,7 +47,10 @@ export function Reveal({
           }
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -8% 0px" }
+      /* Threshold 0 rather than a ratio: a section taller than the viewport can
+         never reach a high ratio, and a fast scroll can skip past a low one
+         before the callback lands — both leave a screen of blank paper. */
+      { threshold: 0, rootMargin: "0px 0px -6% 0px" }
     );
 
     io.observe(el);
@@ -104,7 +107,7 @@ export function Stagger({
           }
         }
       },
-      { threshold: 0.08, rootMargin: "0px 0px -6% 0px" }
+      { threshold: 0, rootMargin: "0px 0px -6% 0px" }
     );
 
     io.observe(el);

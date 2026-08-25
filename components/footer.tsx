@@ -1,83 +1,111 @@
+import Image from "next/image";
 import Link from "next/link";
-import { SITE } from "@/lib/data";
-import { ArrowRight, Mail, MapPin, Phone } from "./icons";
+import {
+  ArrowUp,
+  EnvelopeSimple,
+  MapPin,
+  Phone,
+} from "@phosphor-icons/react/dist/ssr";
+import { CampusNight, OfficeClock } from "@/components/footer-live";
+import { SITE } from "@/lib/site-content";
 
-const explore = [
-  { label: "Mobility Programmes", href: "/programmes" },
-  { label: "International Partnerships", href: "/partnerships" },
-  { label: "Events & Visits", href: "/events" },
-  { label: "About Us", href: "/about" },
-];
-
-const programmes = [
-  { label: "Winter Exchange", href: "/programmes#winter-exchange" },
-  { label: "iOS Developer Program", href: "/programmes#ios-programme" },
-  { label: "NTU Singapore", href: "/programmes#ntu" },
-  { label: "Cambridge Summer", href: "/programmes#cambridge" },
-];
+/* Deep links rather than a mirror of the primary nav — a footer earns its
+   height by getting somebody one level further in than the header can. */
+const COLUMNS = [
+  {
+    index: "01",
+    heading: "Mobility",
+    links: [
+      { label: "Outbound programs", href: "/programs#outbound" },
+      { label: "Inbound programs", href: "/programs#inbound" },
+      { label: "The full catalog", href: "/programs#catalog" },
+      { label: "Previous programs", href: "/programs#archive" },
+    ],
+  },
+  {
+    index: "02",
+    heading: "Partner with us",
+    links: [
+      { label: "Areas of collaboration", href: "/partnerships" },
+      { label: "Industry tie-ups", href: "/partnerships#start" },
+      { label: "Events and delegations", href: "/events" },
+      { label: "Propose an event", href: "/events#organize" },
+    ],
+  },
+  {
+    index: "03",
+    heading: "The office",
+    links: [
+      { label: "What G-SCALE stands for", href: "/about#framework" },
+      { label: "Our role", href: "/about#role" },
+      { label: "The people who answer", href: "/about#people" },
+      { label: "How we answer inquiries", href: "/contact" },
+    ],
+  },
+] as const;
 
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="site-shell">
-        <div className="footer-cta">
-          <h2>
-            Build a route worth <span className="accent">taking.</span>
-          </h2>
-          <Link href="/contact" className="button-primary">
-            Enquire <ArrowRight size={16} weight="bold" />
-          </Link>
-        </div>
-
-        <div className="footer-grid">
+      <div className="site-shell footer-inner">
+        <div className="footer-main">
           <div className="footer-brand">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Galgotias University" />
-            <p>
-              Global programmes, institutional partnerships and international
-              engagement at Galgotias University.
-            </p>
-          </div>
-
-          <nav aria-label="Explore" className="footer-links">
-            <p className="footer-label">Explore</p>
-            {explore.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <nav aria-label="Programmes" className="footer-links">
-            <p className="footer-label">Programmes</p>
-            {programmes.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="footer-contact">
-            <p className="footer-label">Contact</p>
-            <p>
-              <MapPin size={15} color="var(--crimson)" aria-hidden /> {SITE.address}
-            </p>
-            <p>
-              <a href={SITE.phoneHref}>
-                <Phone size={15} color="var(--crimson)" aria-hidden /> {SITE.phone}
-              </a>
-            </p>
-            <p>
+            <span className="footer-mark">
+              <Image src="/gscale-logo.png" width={52} height={52} alt="" />
+              <span>
+                <strong>G-SCALE</strong>
+                <em>International Office</em>
+              </span>
+            </span>
+            <div className="footer-contact">
+              <address className="footer-address">
+                <MapPin size={16} aria-hidden />{SITE.address}
+              </address>
               <a href={`mailto:${SITE.email}`}>
-                <Mail size={15} color="var(--crimson)" aria-hidden /> {SITE.email}
+                <EnvelopeSimple size={16} aria-hidden />{SITE.email}
               </a>
-            </p>
+              <a href={SITE.phoneHref}><Phone size={16} aria-hidden />{SITE.phone}</a>
+            </div>
+            <OfficeClock />
           </div>
+
+          {COLUMNS.map((column) => (
+            <nav className="footer-links" key={column.heading} aria-label={column.heading}>
+              <strong>
+                <i>{column.index}</i>
+                {column.heading}
+              </strong>
+              {column.links.map((link) => (
+                <Link href={link.href} key={link.href}>{link.label}</Link>
+              ))}
+            </nav>
+          ))}
         </div>
+
+        {/* The campus after hours. The office window is lit only while the
+            clock says the desk is manned; the rest answer your cursor. */}
+        <CampusNight />
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} {SITE.name}, {SITE.university}</span>
-          <span>Monday to Friday, 9:00 AM to 5:00 PM IST</span>
+          {/* The office belongs to the University; the parent mark signs off. */}
+          <a
+            href="https://www.galgotiasuniversity.edu.in"
+            className="footer-parent"
+            aria-label="Galgotias University"
+          >
+            <Image
+              src="/galgotias-lockup-light.png"
+              width={495}
+              height={102}
+              alt="Galgotias University"
+            />
+          </a>
+
+          <span>Copyright © {new Date().getFullYear()} Galgotias University. All rights reserved.</span>
+
+          <a href="#main-content" className="footer-top">
+            Back to top <ArrowUp size={14} weight="bold" />
+          </a>
         </div>
       </div>
     </footer>

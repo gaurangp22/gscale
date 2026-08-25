@@ -4,7 +4,7 @@
    G-SCALE INTERNATIONAL — DESIGN SYSTEM
    Language: institutional editorial. Sharp corners, hairline rules,
    enormous display type, crimson as signal rather than decoration.
-   Palette is fixed — nine brand colours, no others. Depth and
+   Palette is fixed — nine brand colors, no others. Depth and
    texture come from alpha, scale, and rhythm, never from new hues.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -220,7 +220,7 @@ body {
 }
 
 /* Fine grain over dark blocks so midnight never reads as flat plastic.
-   Inline SVG turbulence — no network request, no extra colour. */
+   Inline SVG turbulence — no network request, no extra color. */
 .grain::after {
   content: "";
   position: absolute;
@@ -273,7 +273,7 @@ body {
 
 /* Accent word on a dark ground.
    Crimson type on midnight tops out at 2.9:1, which misses AA even for
-   display sizes — no brand colour is light enough to fix it. Inverting to
+   display sizes — no brand color is light enough to fix it. Inverting to
    white on a crimson block reaches 6.4:1 and reads harder anyway. */
 .mark {
   @apply bg-crimson text-white;

@@ -22,7 +22,7 @@ export const NAV = [
   { label: "Home", href: "/" },
   { label: "International Partnerships", href: "/partnerships" },
   { label: "Events & Visits", href: "/events" },
-  { label: "Mobility Programmes", href: "/programmes" },
+  { label: "Mobility Programs", href: "/programs" },
   { label: "About Us", href: "/about" },
 ];
 
@@ -58,17 +58,17 @@ export const PARTNER_MARQUEE = [
 /* ── Home - overview ─────────────────────────────────────────── */
 
 export const OVERVIEW = [
-  "Galgotias University has rapidly positioned itself as one of India's most internationally engaged universities. Ranked 6th in India for international students and diversity, and awarded a QS 5-Star Rating for Teaching, Employability, Facilities, Academic Development, and Innovation, the university's global standing is the direct result of a deliberate, institution-wide strategy centred on quality, collaboration, and real-world impact.",
-  "At the heart of this transformation is the Galgotias Student-Centered Active Learning Ecosystem - G-SCALE - India's first university-wide adoption of active learning across every programme. G-SCALE replaces conventional instruction with collaborative, hands-on, and industry-aligned learning, supported by world-class infrastructure including the Apple iOS Development Centre, Wipro Cybersecurity Centre of Excellence, and Tata Technologies Innovation Hub.",
+  "Galgotias University has rapidly positioned itself as one of India's most internationally engaged universities. Ranked 6th in India for international students and diversity, and awarded a QS 5-Star Rating for Teaching, Employability, Facilities, Academic Development, and Innovation, the university's global standing is the direct result of a deliberate, institution-wide strategy centered on quality, collaboration, and real-world impact.",
+  "At the heart of this transformation is the Galgotias Student-Centered Active Learning Ecosystem - G-SCALE - India's first university-wide adoption of active learning across every program. G-SCALE replaces conventional instruction with collaborative, hands-on, and industry-aligned learning, supported by world-class infrastructure including the Apple iOS Development Center, Wipro Cybersecurity Center of Excellence, and Tata Technologies Innovation Hub.",
   "Through sustained engagement with institutions such as Nanyang Technological University, Singapore, and active participation in global rankings forums including QS and Times Higher Education, Galgotias University is building a genuinely international academic community - one that prepares students not just for employment, but for global leadership.",
 ] as const;
 
 export const EXPLORE_CARDS = [
   {
     icon: "plane" as const,
-    title: "Mobility Programmes",
-    text: "Inbound & outbound programmes connecting GU with the world's leading institutions.",
-    href: "/programmes",
+    title: "Mobility Programs",
+    text: "Inbound & outbound programs connecting GU with the world's leading institutions.",
+    href: "/programs",
   },
   {
     icon: "handshake" as const,
@@ -90,9 +90,9 @@ export const EXPLORE_CARDS = [
   },
 ];
 
-/* ── Programmes ─────────────────────────────────────────────── */
+/* ── Programs ─────────────────────────────────────────────── */
 
-export type Programme = {
+export type Program = {
   slug: string;
   title: string;
   kind: "Inbound" | "Outbound";
@@ -101,34 +101,34 @@ export type Programme = {
   blurb: string;
 };
 
-export const FEATURED_PROGRAMMES: Programme[] = [
+export const FEATURED_PROGRAMS: Program[] = [
   {
     slug: "winter-exchange",
-    title: "Winter Short-Term Exchange Programme",
+    title: "Winter Short-Term Exchange Program",
     kind: "Inbound",
     partner: "Galgotias University · Greater Noida",
     blurb:
       "Our flagship inbound initiative - thematic academic tracks, project-based learning, industry visits, and cultural immersion across India for students from partner institutions.",
   },
   {
-    slug: "ios-programme",
+    slug: "ios-program",
     title: "iOS Student Developer Program",
     kind: "Inbound",
     partner: "Apple & Infosys · Greater Noida",
     blurb:
-      "A two-week intensive residential programme where international students build real iOS applications, engage in design thinking workshops, and experience India's innovation ecosystem.",
+      "A two-week intensive residential program where international students build real iOS applications, engage in design thinking workshops, and experience India's innovation ecosystem.",
   },
   {
     slug: "ntu",
-    title: "NTU Global Short-Term Programmes",
+    title: "NTU Global Short-Term Programs",
     kind: "Outbound",
     partner: "Nanyang Technological University, Singapore",
     blurb:
-      "ASEAN Summer @ NTU (Scholarship) and the GEM Trailblazer Programme - immersive academic and cultural experiences at one of Asia's most advanced universities.",
+      "ASEAN Summer @ NTU (Scholarship) and the GEM Trailblazer Program - immersive academic and cultural experiences at one of Asia's most advanced universities.",
   },
   {
     slug: "cambridge",
-    title: "Cambridge Global Summer Programme",
+    title: "Cambridge Global Summer Program",
     kind: "Outbound",
     partner: "Girton College, Cambridge",
     dates: "12-25 July 2026",
@@ -138,11 +138,11 @@ export const FEATURED_PROGRAMMES: Programme[] = [
 ];
 
 export const WINTER_EXCHANGE = {
-  name: "Winter Short-Term Exchange Programme",
+  name: "Winter Short-Term Exchange Program",
   tagline: "A Global Learning Experience at Galgotias University",
   meta: ["Inbound · Flagship Initiative", "Galgotias University, Greater Noida"],
   intro: [
-    "The Winter Short-Term Exchange Programme is Galgotias University's flagship inbound initiative, bringing students from partner institutions together for an academic, cultural, and experiential learning journey in India. Each edition is built around thematic academic tracks - interactive workshops, project-based learning, and expert masterclasses that encourage critical thinking and interdisciplinary collaboration.",
+    "The Winter Short-Term Exchange Program is Galgotias University's flagship inbound initiative, bringing students from partner institutions together for an academic, cultural, and experiential learning journey in India. Each edition is built around thematic academic tracks - interactive workshops, project-based learning, and expert masterclasses that encourage critical thinking and interdisciplinary collaboration.",
     "Beyond academics, participants take part in cultural immersion, industry visits, and networking across India, gaining a rounded view of the country's innovation ecosystem and economy alongside lasting international friendships.",
   ],
   features: [
@@ -161,12 +161,12 @@ export const WINTER_EXCHANGE = {
   ],
 };
 
-export const IOS_PROGRAMME = {
+export const IOS_PROGRAM = {
   name: "iOS Student Developer Program",
   meta: ["Supported by Apple and Infosys", "Galgotias University, Greater Noida"],
   intro: [
-    "The iOS Student Developer Program is Galgotias University's flagship inbound initiative - a two-week intensive, residential programme placing international students at the centre of India's dynamic technology and innovation ecosystem. Delivered at GU's iOS Development Centre, built in partnership with Apple and Infosys, the programme integrates product development, entrepreneurship, and deep cultural immersion into a single, outcome-driven experience.",
-    "Unlike conventional exchange programmes, this initiative is built on a build-first learning model, in which students are challenged to develop functional, real-world technology solutions from day one. Every component of the programme contributes to a complete innovation journey - from problem identification through to a live demonstration before academic and industry panels.",
+    "The iOS Student Developer Program is Galgotias University's flagship inbound initiative - a two-week intensive, residential program placing international students at the center of India's dynamic technology and innovation ecosystem. Delivered at GU's iOS Development Center, built in partnership with Apple and Infosys, the program integrates product development, entrepreneurship, and deep cultural immersion into a single, outcome-driven experience.",
+    "Unlike conventional exchange programs, this initiative is built on a build-first learning model, in which students are challenged to develop functional, real-world technology solutions from day one. Every component of the program contributes to a complete innovation journey - from problem identification through to a live demonstration before academic and industry panels.",
   ],
   structure: [
     {
@@ -175,7 +175,7 @@ export const IOS_PROGRAMME = {
     },
     {
       title: "Entrepreneurship & Design Thinking",
-      text: "Structured workshops guide students through globally recognised innovation frameworks, from empathy mapping through to ideation, prototyping, and solution validation.",
+      text: "Structured workshops guide students through globally recognized innovation frameworks, from empathy mapping through to ideation, prototyping, and solution validation.",
     },
     {
       title: "Mentored Build & Hackathon Environment",
@@ -187,7 +187,7 @@ export const IOS_PROGRAMME = {
     },
     {
       title: "Pitching & Showcase",
-      text: "The programme culminates in a formal demonstration event where student teams present their completed iOS solutions to panels from the academic community and the technology industry.",
+      text: "The program culminates in a formal demonstration event where student teams present their completed iOS solutions to panels from the academic community and the technology industry.",
     },
   ],
   highlights: [
@@ -227,7 +227,7 @@ export const IOS_PROGRAMME = {
     { label: "Duration", value: "2 Weeks - Intensive, Residential" },
     { label: "Location", value: "Greater Noida, India" },
     { label: "Academic Credits", value: "3 Credits (transferable)" },
-    { label: "Programme Cycles", value: "Winter (November - January) · Spring (February - April)" },
+    { label: "Program Cycles", value: "Winter (November - January) · Spring (February - April)" },
     { label: "Language of Instruction", value: "English" },
   ],
   outcomes: [
@@ -236,22 +236,22 @@ export const IOS_PROGRAMME = {
     "Documented global teamwork in a high-performance environment",
     "Pitching and communication skills for academic and industry audiences",
   ],
-  photosSlug: "ios-programme",
+  photosSlug: "ios-program",
 };
 
-export const NTU_PROGRAMMES = {
-  name: "NTU Global Short-Term Programmes - Singapore",
+export const NTU_PROGRAMS = {
+  name: "NTU Global Short-Term Programs - Singapore",
   meta: ["Nanyang Technological University", "Singapore"],
   intro:
-    "Galgotias University participates in selected NTU Global Short-Term Programmes at Nanyang Technological University, Singapore, nominating and supporting eligible students for immersive academic and cultural experiences that combine interdisciplinary learning, collaborative projects, and cross-cultural exchange.",
+    "Galgotias University participates in selected NTU Global Short-Term Programs at Nanyang Technological University, Singapore, nominating and supporting eligible students for immersive academic and cultural experiences that combine interdisciplinary learning, collaborative projects, and cross-cultural exchange.",
   tracks: [
     {
       title: "ASEAN Summer @ NTU (Scholarship)",
       duration: "4 Weeks · Scholarship",
-      text: "A scholarship programme bringing together students from across ASEAN and partner universities for interdisciplinary learning and cross-cultural exchange in Singapore.",
+      text: "A scholarship program bringing together students from across ASEAN and partner universities for interdisciplinary learning and cross-cultural exchange in Singapore.",
     },
     {
-      title: "GEM Trailblazer Programme",
+      title: "GEM Trailblazer Program",
       duration: "2 Weeks · NTU Singapore campus",
       text: "NTU's flagship short-term mobility initiative offering academic engagement, experiential learning, and cultural immersion, preparing participants for an increasingly interconnected future.",
     },
@@ -265,8 +265,8 @@ export const NTU_PROGRAMMES = {
   alumni: [
     {
       name: "Yashvardhan Raj",
-      programme: "B.Sc. Microbiology (Hons.)",
-      text: "Developed two project solutions during the 2025 programme: ReGrub (Singapore), a food redistribution system addressing migrant food insecurity, and SalvaAqua (Vietnam, Mekong Delta), a solar-powered water purification solution.",
+      program: "B.Sc. Microbiology (Hons.)",
+      text: "Developed two project solutions during the 2025 program: ReGrub (Singapore), a food redistribution system addressing migrant food insecurity, and SalvaAqua (Vietnam, Mekong Delta), a solar-powered water purification solution.",
       projects: [
         {
           name: "ReGrub (Singapore)",
@@ -280,37 +280,37 @@ export const NTU_PROGRAMMES = {
     },
     {
       name: "Priyanshu Yadav",
-      programme: "B.Tech",
+      program: "B.Tech",
       text: "Focused on entrepreneurial and analytical skills, working through the full cycle of idea development - from framing to pitching refined solutions before expert panels.",
       projects: [],
     },
   ] as Array<{
     name: string;
-    programme: string;
+    program: string;
     text: string;
     projects: Array<{ name: string; text: string }>;
   }>,
   current2026: {
     asean: [
-      { name: "Jeetika Sharma", programme: "B.Tech Biotechnology" },
-      { name: "Vishnu Jaiswal", programme: "BA LLB (Hons.)" },
+      { name: "Jeetika Sharma", program: "B.Tech Biotechnology" },
+      { name: "Vishnu Jaiswal", program: "BA LLB (Hons.)" },
     ],
     gem: [
-      { name: "Jatin Garg", programme: "B.Tech CSE (Data Science)" },
-      { name: "Karan Tandon", programme: "B.Tech Biotechnology" },
-      { name: "Lavanya Singh", programme: "B.Tech (Electronics & Communication Engineering)" },
-      { name: "Gagan Pathak", programme: "Bachelor of Journalism & Mass Communication" },
-      { name: "Appoorva Suresh Khajuria", programme: "B.Tech (Electronics & Communication Engineering)" },
-      { name: "Tushar Sharma", programme: "BBA in Aviation Management (Hons. with Research)" },
+      { name: "Jatin Garg", program: "B.Tech CSE (Data Science)" },
+      { name: "Karan Tandon", program: "B.Tech Biotechnology" },
+      { name: "Lavanya Singh", program: "B.Tech (Electronics & Communication Engineering)" },
+      { name: "Gagan Pathak", program: "Bachelor of Journalism & Mass Communication" },
+      { name: "Appoorva Suresh Khajuria", program: "B.Tech (Electronics & Communication Engineering)" },
+      { name: "Tushar Sharma", program: "BBA in Aviation Management (Hons. with Research)" },
     ],
   },
-  photosSlug: "ntu-global-programmes",
+  photosSlug: "ntu-global-programs",
 };
 
-export const CAMBRIDGE_PROGRAMME = {
+export const CAMBRIDGE_PROGRAM = {
   meta: ["Girton College, University of Cambridge", "12-25 July 2026"],
   intro:
-    "Galgotias University facilitated participation for selected students in the Cambridge Global Summer Programme - a two-week residential experience at Girton College, University of Cambridge, engaging with international peers and the intellectual culture of one of the world's leading universities.",
+    "Galgotias University facilitated participation for selected students in the Cambridge Global Summer Program - a two-week residential experience at Girton College, University of Cambridge, engaging with international peers and the intellectual culture of one of the world's leading universities.",
   modules: [
     {
       title: "Entrepreneurship & Venture Thinking",
@@ -330,13 +330,13 @@ export const CAMBRIDGE_PROGRAMME = {
     { label: "Duration", value: "2 Weeks - Residential" },
     { label: "Location", value: "Girton College, University of Cambridge, United Kingdom" },
     { label: "Additional Experience", value: "London Immersion Visit" },
-    { label: "Certification", value: "International Certification from the Cambridge Global Programme" },
+    { label: "Certification", value: "International Certification from the Cambridge Global Program" },
   ],
   selection: [
     "Application submitted through the International Office",
     "Profile evaluation covering academic performance and co-curricular engagement",
     "Motivational interview assessing communication skills and readiness for an international academic environment",
-    "Final nomination and enrolment processed by the International Office",
+    "Final nomination and enrollment processed by the International Office",
   ],
   photosSlug: "cambridge-global-summer",
 };
@@ -386,8 +386,8 @@ export const EDVENTURES = {
   photosSlug: "edventures-2026",
 };
 
-export const PROGRAMMES_INTRO =
-  "Galgotias University's international programmes are structured to provide students with meaningful global exposure through rigorously designed inbound and outbound opportunities. Each programme is aligned with the university's broader internationalisation strategy, building competencies that go beyond academic knowledge, including cross-cultural communication, innovation thinking, and global professional networks.";
+export const PROGRAMS_INTRO =
+  "Galgotias University's international programs are structured to provide students with meaningful global exposure through rigorously designed inbound and outbound opportunities. Each program is aligned with the university's broader internationalization strategy, building competencies that go beyond academic knowledge, including cross-cultural communication, innovation thinking, and global professional networks.";
 
 /* ── Partnerships ───────────────────────────────────────────── */
 
@@ -411,7 +411,7 @@ export const QS_THE_EVENTS: QsTheEvent[] = [
     badge: "Past Event",
     title: "QS India Summit - Goa",
     lines: ["Presentation · Advancing Drone Innovation and STEM Esports"],
-    text: 'Galgotias University presented "Advancing Drone Innovation and STEM Esports: The Galgotias-Drone Destination Model" at the QS India Summit, drawing strong interest from academic leaders across the country. The presentation centred on the Galgotias Centre for Drone Intelligence and Simulation (GCDIS), built in collaboration with Drone Destination Pvt. Ltd. Its Drone Soccer Arena - a STEM esports initiative - combines competitive learning with precision flying, teamwork, and real-time decision-making. The programme runs on four pillars: faculty enablement, student training, curriculum integration, and student community development.',
+    text: 'Galgotias University presented "Advancing Drone Innovation and STEM Esports: The Galgotias-Drone Destination Model" at the QS India Summit, drawing strong interest from academic leaders across the country. The presentation centered on the Galgotias Center for Drone Intelligence and Simulation (GCDIS), built in collaboration with Drone Destination Pvt. Ltd. Its Drone Soccer Arena - a STEM esports initiative - combines competitive learning with precision flying, teamwork, and real-time decision-making. The program runs on four pillars: faculty enablement, student training, curriculum integration, and student community development.',
     keyPeople: [
       "Dr. Meenakshi Awasthi (Head, DEECE)",
       "Puneet Saini (Incharge, GCDIS)",
@@ -479,11 +479,11 @@ export const GSCALE = {
     },
     {
       title: "Real-World Problem Solving",
-      text: "Students work on live industry challenges, research problems, and societal issues throughout their programmes.",
+      text: "Students work on live industry challenges, research problems, and societal issues throughout their programs.",
     },
     {
       title: "Industry & International Exposure",
-      text: "G-SCALE underpins Galgotias University's outbound programmes, industry tie-ups, and international research collaborations.",
+      text: "G-SCALE underpins Galgotias University's outbound programs, industry tie-ups, and international research collaborations.",
     },
   ],
   numbers: [
@@ -493,34 +493,34 @@ export const GSCALE = {
     { value: "3+", label: "World-Class Innovation Hubs" },
   ],
   footnote:
-    "Supported by the Apple iOS Development Centre, Wipro Cybersecurity Centre of Excellence, and Tata Technologies Innovation Hub, G-SCALE underpins Galgotias University's international academic partnerships and is aligned with academic frameworks at institutions including NTU Singapore.",
+    "Supported by the Apple iOS Development Center, Wipro Cybersecurity Center of Excellence, and Tata Technologies Innovation Hub, G-SCALE underpins Galgotias University's international academic partnerships and is aligned with academic frameworks at institutions including NTU Singapore.",
 };
 
 export const BUILDING_PARTNERSHIPS = {
   intro:
-    "Galgotias University is actively expanding its network of institutional collaborations - with universities, research institutions, and industry organisations worldwide. We welcome conversations with institutions interested in student and faculty exchange, joint research, dual-credential pathways, and collaborative programming.",
+    "Galgotias University is actively expanding its network of institutional collaborations - with universities, research institutions, and industry organizations worldwide. We welcome conversations with institutions interested in student and faculty exchange, joint research, dual-credential pathways, and collaborative programming.",
   areas: [
-    "Student and faculty exchange programmes - semester-long and short-term mobility options",
+    "Student and faculty exchange programs - semester-long and short-term mobility options",
     "Joint research projects, co-authored publications, and collaborative grant applications",
     "Dual degree and credit transfer pathways allowing students to earn qualifications from both institutions",
     "Collaborative conferences, seminars, and academic workshops",
-    "Curriculum benchmarking and joint programme development",
+    "Curriculum benchmarking and joint program development",
   ],
 };
 
 export const INDUSTRY_TIEUPS_INTRO =
-  "Galgotias University has built an extensive industry-academia network. Our partners don't just sponsor programmes - they help design curriculum, mentor students, and hire directly from campus.";
+  "Galgotias University has built an extensive industry-academia network. Our partners don't just sponsor programs - they help design curriculum, mentor students, and hire directly from campus.";
 
 export const INDUSTRY_TIEUPS = [
   {
     name: "Apple & Infosys",
-    thing: "iOS Development Centre",
-    text: "The Apple iOS Development Centre, supported by Infosys, gives students hands-on training through the iOS Student Developer Program and a pipeline of student-led app projects.",
+    thing: "iOS Development Center",
+    text: "The Apple iOS Development Center, supported by Infosys, gives students hands-on training through the iOS Student Developer Program and a pipeline of student-led app projects.",
   },
   {
     name: "Wipro",
-    thing: "Cybersecurity Centre of Excellence",
-    text: "In partnership with Wipro, Galgotias University runs a dedicated Cybersecurity Centre of Excellence, training students in information security, ethical hacking, and digital defence.",
+    thing: "Cybersecurity Center of Excellence",
+    text: "In partnership with Wipro, Galgotias University runs a dedicated Cybersecurity Center of Excellence, training students in information security, ethical hacking, and digital defense.",
   },
   {
     name: "Tata Technologies",
@@ -535,7 +535,7 @@ export const INDUSTRY_TIEUPS = [
   {
     name: "Drone Destination Pvt. Ltd.",
     thing: "GCDIS - Drone Intelligence & Simulation",
-    text: "The Galgotias Centre for Drone Intelligence and Simulation (GCDIS), built with Drone Destination, delivers UAV training across design, build, mission planning, and operations.",
+    text: "The Galgotias Center for Drone Intelligence and Simulation (GCDIS), built with Drone Destination, delivers UAV training across design, build, mission planning, and operations.",
   },
   {
     name: "Recruiter Network",
@@ -555,7 +555,7 @@ export type GuEvent = {
   title: string;
   where: string;
   when: string;
-  category: "Summit" | "Programme" | "Competition" | "Delegation";
+  category: "Summit" | "Program" | "Competition" | "Delegation";
   text: string;
   linkLabel?: string;
   linkHref?: string;
@@ -580,7 +580,7 @@ export const FEATURED_EVENTS: GuEvent[] = [
     where: "Futian Shangri-La Hotel, Shenzhen, China",
     when: "8-9 April 2026",
     category: "Summit",
-    text: "Galgotias University joined higher education leaders from China and the Asia-Pacific to discuss internationalisation, rankings strategy, and academic innovation - and to engage directly with potential partner institutions.",
+    text: "Galgotias University joined higher education leaders from China and the Asia-Pacific to discuss internationalization, rankings strategy, and academic innovation - and to engage directly with potential partner institutions.",
     linkLabel: "Official Event Website",
     linkHref: "https://www.qs.com/en-us/conference/china",
     photosSlug: "qs-china-summit",
@@ -604,7 +604,7 @@ export const FEATURED_EVENTS: GuEvent[] = [
     where: "Jakarta, Indonesia",
     when: "22-25 June 2026",
     category: "Summit",
-    text: "Galgotias University joined delegates from universities, governments, NGOs, and industry for the live reveal of the THE Impact Rankings 2026, recognising universities driving measurable real-world impact.",
+    text: "Galgotias University joined delegates from universities, governments, NGOs, and industry for the live reveal of the THE Impact Rankings 2026, recognizing universities driving measurable real-world impact.",
     linkLabel: "Official Event Website",
     linkHref: "https://www.gsdcongress.com/2026",
     photosSlug: "gsdc-congress",
@@ -622,11 +622,11 @@ export const FEATURED_EVENTS: GuEvent[] = [
   {
     status: "past",
     badge: "Student Mobility",
-    title: "Cambridge Global Summer Programme 2026",
+    title: "Cambridge Global Summer Program 2026",
     where: "Girton College, University of Cambridge, UK",
     when: "12-25 July 2026",
-    category: "Programme",
-    text: "Selected Galgotias University students took part in this two-week residential programme in entrepreneurship, AI-driven innovation, and public speaking, delivered by Cambridge-affiliated faculty.",
+    category: "Program",
+    text: "Selected Galgotias University students took part in this two-week residential program in entrepreneurship, AI-driven innovation, and public speaking, delivered by Cambridge-affiliated faculty.",
     photosSlug: "cambridge-global-summer",
   },
 ];
@@ -640,7 +640,7 @@ export const FEATURED_VISITS: GuEvent[] = [
     when: "December 2025",
     category: "Delegation",
     text: "Galgotias University hosted an international student delegation from NTU Singapore and Villa College, Maldives for the inaugural iOS Student Developer Program - two weeks combining app development, design thinking workshops, industry visits to Paytm and Parle Products, and cultural excursions to the Taj Mahal, Agra Fort, and Dilli Haat.",
-    photosSlug: "ios-programme",
+    photosSlug: "ios-program",
   },
   {
     status: "past",
@@ -666,12 +666,12 @@ export const CONFERENCE_TYPES = [
   {
     icon: "chalkboard" as const,
     title: "Academic Workshops",
-    text: "Faculty-led workshops on internationalisation, active learning, research methodology, and curriculum development.",
+    text: "Faculty-led workshops on internationalization, active learning, research methodology, and curriculum development.",
   },
   {
     icon: "network" as const,
     title: "International Partner Summits",
-    text: "Regular gatherings of Galgotias University's international partners to review and strengthen collaborative programmes.",
+    text: "Regular gatherings of Galgotias University's international partners to review and strengthen collaborative programs.",
   },
 ];
 
@@ -683,7 +683,7 @@ export const CONFERENCES_TEXT = [
 /* ── About ──────────────────────────────────────────────────── */
 
 export const WHO_WE_ARE =
-  "The International Office is Galgotias University's gateway to global engagement - connecting students, faculty, researchers, and institutional partners with opportunities beyond the campus. Through strategic alliances with universities and organisations worldwide, we advance internationalisation by building pathways for global learning, collaborative research, academic exchange, and cross-cultural engagement.";
+  "The International Office is Galgotias University's gateway to global engagement - connecting students, faculty, researchers, and institutional partners with opportunities beyond the campus. Through strategic alliances with universities and organizations worldwide, we advance internationalization by building pathways for global learning, collaborative research, academic exchange, and cross-cultural engagement.";
 
 export const OUR_MISSION =
   "Our mission is to strengthen Galgotias University's global presence while equipping every student with the international experience they need to learn, collaborate, and lead beyond borders.";
@@ -692,17 +692,17 @@ export const ROLES = [
   {
     icon: "planeTakeoff" as const,
     title: "Student Mobility - Outbound",
-    text: "We believe international experience is central to a globally relevant education. The International Office enables students to take part in overseas study, research, and leadership opportunities through our network of partner institutions - managing selection, programme partnerships, logistics, visa and travel support, and post-programme documentation.",
+    text: "We believe international experience is central to a globally relevant education. The International Office enables students to take part in overseas study, research, and leadership opportunities through our network of partner institutions - managing selection, program partnerships, logistics, visa and travel support, and post-program documentation.",
   },
   {
     icon: "planeLanding" as const,
     title: "Student Mobility - Inbound",
-    text: "Galgotias University welcomes students from around the world to an academically enriching, culturally diverse campus. The International Office works with partner institutions to facilitate exchanges, handling enquiries, arrival, academic integration, visa and FRRO compliance, accommodation, and cultural orientation.",
+    text: "Galgotias University welcomes students from around the world to an academically enriching, culturally diverse campus. The International Office works with partner institutions to facilitate exchanges, handling inquiries, arrival, academic integration, visa and FRRO compliance, accommodation, and cultural orientation.",
   },
   {
     icon: "handshake" as const,
     title: "Institutional Partnerships & MoUs",
-    text: "International partnerships are central to building a globally connected university. The International Office identifies potential partners, negotiates and drafts agreements, and works to keep active collaborations delivering real value - spanning universities, research institutions, and industry organisations across Asia, Europe, North America, and the Middle East.",
+    text: "International partnerships are central to building a globally connected university. The International Office identifies potential partners, negotiates and drafts agreements, and works to keep active collaborations delivering real value - spanning universities, research institutions, and industry organizations across Asia, Europe, North America, and the Middle East.",
   },
   {
     icon: "chart" as const,
@@ -712,7 +712,7 @@ export const ROLES = [
   {
     icon: "calendarCheck" as const,
     title: "Events & Delegations",
-    text: "The office organises and facilitates international visits to campus, coordinates Galgotias University's participation in global higher education summits and forums, and hosts international delegations, academic visitors, and conference guests.",
+    text: "The office organizes and facilitates international visits to campus, coordinates Galgotias University's participation in global higher education summits and forums, and hosts international delegations, academic visitors, and conference guests.",
   },
   {
     icon: "graduate" as const,
@@ -723,16 +723,16 @@ export const ROLES = [
 
 /* ── Contact ────────────────────────────────────────────────── */
 
-export const ENQUIRY_TYPES = [
-  "Inbound Programme - Winter Short-Term Exchange Programme",
-  "Inbound Programme - iOS Student Developer Program",
-  "Outbound Programme - NTU Global Programs",
-  "Outbound Programme - Cambridge Global Summer Programme",
+export const INQUIRY_TYPES = [
+  "Inbound Program - Winter Short-Term Exchange Program",
+  "Inbound Program - iOS Student Developer Program",
+  "Outbound Program - NTU Global Programs",
+  "Outbound Program - Cambridge Global Summer Program",
   "Institutional Partnership / MoU",
   "Industry Tie-Up",
   "International Student Support",
-  "QS / THE Rankings Enquiry",
-  "General Enquiry",
+  "QS / THE Rankings Inquiry",
+  "General Inquiry",
 ];
 
 export const MAP_EMBED_SRC =
@@ -749,14 +749,14 @@ export const AUDIENCE_ROUTES = [
   {
     title: "International students",
     text: "Winter Short-Term Exchange and the iOS Student Developer Program.",
-    href: "/programmes#inbound",
-    cta: "Inbound programmes",
+    href: "/programs#inbound",
+    cta: "Inbound programs",
   },
   {
     title: "Current GU students",
     text: "EDVentures, NTU Singapore, Cambridge, and the Ynov CTF Challenge.",
-    href: "/programmes#outbound",
-    cta: "Outbound programmes",
+    href: "/programs#outbound",
+    cta: "Outbound programs",
   },
   {
     title: "Partner institutions",
@@ -773,7 +773,7 @@ export const AUDIENCE_ROUTES = [
 ];
 
 /* ── Homepage - journey strip ──────────────────────────────── */
-/* Every stop is an event or programme documented in the
+/* Every stop is an event or program documented in the
    International Office write-up. */
 
 export const JOURNEY = [
@@ -782,8 +782,8 @@ export const JOURNEY = [
   { city: "Shenzhen", country: "China", lat: 22.54, lng: 114.06, note: "QS China Summit 2026" },
   { city: "Hong Kong", country: "Hong Kong SAR", lat: 22.32, lng: 114.17, note: "THE Asia Universities Summit · EDVentures 2026" },
   { city: "Jakarta", country: "Indonesia", lat: -6.21, lng: 106.85, note: "GSD Congress · GSDC Jakarta 2026" },
-  { city: "Cambridge", country: "United Kingdom", lat: 52.2, lng: 0.12, note: "Cambridge Global Summer Programme 2026" },
-  { city: "Singapore", country: "Singapore", lat: 1.35, lng: 103.82, note: "NTU Global Short-Term Programmes" },
+  { city: "Cambridge", country: "United Kingdom", lat: 52.2, lng: 0.12, note: "Cambridge Global Summer Program 2026" },
+  { city: "Singapore", country: "Singapore", lat: 1.35, lng: 103.82, note: "NTU Global Short-Term Programs" },
 ] as const;
 
 /* ── Globe ──────────────────────────────────────────────────────
@@ -817,6 +817,6 @@ export const STUDENT_STORY = {
   role: "Founder & CEO, Project TACTO · B.Tech, Galgotias University",
   outcome:
     "Project TACTO - an assistive coding platform for blind and visually impaired learners - was named Champion among 19 finalist teams from 10 countries at EDVentures 2026, winning the AWS Championship Prize of USD 7,000.",
-  href: "/programmes#edventures",
+  href: "/programs#edventures",
   cta: "Read the EDVentures story",
 };

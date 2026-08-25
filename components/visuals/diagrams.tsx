@@ -11,7 +11,7 @@ const CRIMSON = "#bd1622";
 
 /* ═══════════════════════════════════════════════════════════════
    ABOUT — Mandate orbit
-   A hub-and-orbit schematic: the office at the centre, its six
+   A hub-and-orbit schematic: the office at the center, its six
    mandates on the ring, drift rings turning slowly behind them.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -43,7 +43,7 @@ export function MandateOrbit({
       viewBox="0 0 600 600"
       className={cn("h-full w-full", className)}
       role="img"
-      aria-label="Diagram: the International Office at the centre of its six mandates"
+      aria-label="Diagram: the International Office at the center of its six mandates"
     >
       <defs>
         <radialGradient id="orbit-core" cx="50%" cy="50%" r="50%">
@@ -193,7 +193,7 @@ export function ChordDiagram({
       {unique.map(([a, b], i) => {
         const p = points[a];
         const q = points[b];
-        // Pull the control point toward the centre: longer chords bow more.
+        // Pull the control point toward the center: longer chords bow more.
         const pull = 0.22;
         return (
           <path
@@ -237,12 +237,12 @@ export function ChordDiagram({
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PROGRAMMES — Flow schematic
+   PROGRAMS — Flow schematic
    Inbound routes fold in from the left, outbound fan out to the
    right, campus in the middle. Reads like a departures diagram.
    ═══════════════════════════════════════════════════════════════ */
 
-export function ProgrammeFlow({
+export function ProgramFlow({
   inbound,
   outbound,
   className,
@@ -264,7 +264,7 @@ export function ProgrammeFlow({
       viewBox={`0 0 ${W} ${H}`}
       className={cn("h-full w-full", className)}
       role="img"
-      aria-label="Diagram: inbound programmes arriving at Galgotias University and outbound programmes departing"
+      aria-label="Diagram: inbound programs arriving at Galgotias University and outbound programs departing"
     >
       <defs>
         <marker id="flow-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">

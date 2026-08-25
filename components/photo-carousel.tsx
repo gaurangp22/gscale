@@ -87,7 +87,7 @@ export function PhotoCarousel({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
-              alt={`${label} — photo ${index + 1}`}
+              alt={`${label}, photo ${index + 1}`}
               loading="lazy"
               className="aspect-[4/3] w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
             />

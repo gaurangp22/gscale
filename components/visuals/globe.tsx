@@ -282,7 +282,7 @@ export function Globe({
           ctx.stroke();
         }
 
-        /* Travelling route marker. */
+        /* Traveling route marker. */
         if (!reduced && drawIn >= 1) {
           const cycle = (elapsed * 0.32 + index * 0.17) % 1;
           const p = project(arcPoint(route.a, route.b, cycle, 0.55));

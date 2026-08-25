@@ -4,12 +4,12 @@ import { ArrowRight } from "@/components/icons";
 
 const TASKS = [
   {
-    label: "Programme enquiry",
-    text: "Inbound or outbound mobility programmes for students.",
-    match: (value: string) => value.includes("Programme"),
+    label: "Program inquiry",
+    text: "Inbound or outbound mobility programs for students.",
+    match: (value: string) => value.includes("Program"),
   },
   {
-    label: "Partnership enquiry",
+    label: "Partnership inquiry",
     text: "MoUs, exchanges, joint research, industry tie-ups.",
     match: (value: string) => value.includes("Partnership") || value.includes("Industry"),
   },
@@ -21,10 +21,10 @@ const TASKS = [
 ];
 
 /**
- * Shortcut buttons that preselect the enquiry type and move focus into
+ * Shortcut buttons that preselect the inquiry type and move focus into
  * the form, so visitors never have to hunt through the select.
  */
-export function EnquiryRouter({ options }: { options: readonly string[] }) {
+export function InquiryRouter({ options }: { options: readonly string[] }) {
   const route = (match: (value: string) => boolean) => {
     const select = document.getElementById("ct-type") as HTMLSelectElement | null;
     if (select) {
@@ -34,7 +34,7 @@ export function EnquiryRouter({ options }: { options: readonly string[] }) {
       if (found) select.value = found.value;
     }
 
-    document.getElementById("enquiry-form")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("inquiry-form")?.scrollIntoView({ behavior: "smooth" });
     document.getElementById("ct-name")?.focus({ preventScroll: true });
   };
 
@@ -57,7 +57,7 @@ export function EnquiryRouter({ options }: { options: readonly string[] }) {
       ))}
 
       {/* Full option list stays in the DOM for no-JS and crawlers. */}
-      <datalist id="enquiry-types">
+      <datalist id="inquiry-types">
         {options.map((option) => (
           <option key={option} value={option} />
         ))}

@@ -6,7 +6,7 @@ import { ArrowRight, Check } from "./icons";
 export function SmartForm({
   children,
   submitLabel,
-  successTitle = "Enquiry received.",
+  successTitle = "Inquiry received.",
   successText = "The International Office will review your submission and respond by email shortly.",
 }: {
   children: ReactNode;
@@ -42,7 +42,7 @@ export function SmartForm({
           onClick={() => setState("idle")}
           className="btn-outline-dark btn-sm mt-9"
         >
-          <span>Send another enquiry</span>
+          <span>Send another inquiry</span>
         </button>
       </div>
     );

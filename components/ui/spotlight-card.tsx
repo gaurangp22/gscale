@@ -4,7 +4,7 @@
  * Spotlight Card — adapted from Aceternity UI's Card Spotlight / Glowing Effect.
  * Reworked for this project: a crimson radial that tracks the cursor across a
  * sharp-cornered panel, plus a hairline border that lights up on approach.
- * No colour outside the brand palette, and it degrades to a plain panel when
+ * No color outside the brand palette, and it degrades to a plain panel when
  * the pointer is coarse or motion is reduced.
  */
 

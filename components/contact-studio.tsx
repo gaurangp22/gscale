@@ -2,46 +2,30 @@
 
 import { FormEvent, useState } from "react";
 import {
+  AirplaneLanding,
+  AirplaneTakeoff,
   ArrowRight,
-  Check,
-  Graduate,
-  Handshake,
-  PlaneTakeoff,
-  ShieldCheck,
-  Users,
-} from "./icons";
-import { ENQUIRY_TYPES } from "@/lib/data";
+  Buildings,
+  CalendarBlank,
+  CheckCircle,
+  Question,
+  UsersThree,
+} from "@phosphor-icons/react";
+import { INQUIRY_CATEGORIES } from "@/lib/site-content";
 
-const routes = [
-  {
-    title: "International admissions",
-    hint: "Arriving at Galgotias University",
-    Icon: Graduate,
-  },
-  {
-    title: "Outbound mobility",
-    hint: "Studying, building or competing abroad",
-    Icon: PlaneTakeoff,
-  },
-  {
-    title: "Institutional partnerships",
-    hint: "Exchange, research, pathways and MoUs",
-    Icon: Handshake,
-  },
-  {
-    title: "Visa and FRRO",
-    hint: "Compliance and arrival support",
-    Icon: ShieldCheck,
-  },
-  {
-    title: "Something else",
-    hint: "Let the office route your question",
-    Icon: Users,
-  },
+const icons = [
+  AirplaneTakeoff,
+  AirplaneLanding,
+  Buildings,
+  CalendarBlank,
+  UsersThree,
+  Question,
 ];
 
 export function ContactStudio() {
-  const [selected, setSelected] = useState(routes[0].title);
+  const [selected, setSelected] = useState<(typeof INQUIRY_CATEGORIES)[number]>(
+    INQUIRY_CATEGORIES[0],
+  );
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -50,91 +34,92 @@ export function ContactStudio() {
   }
 
   return (
-    <section className="contact-studio section-pad" id="enquiry">
-      <div className="site-shell contact-grid">
+    <section className="contact-workspace" id="inquiry">
+      <div className="contact-router" aria-label="Choose an inquiry category">
+        <h2>Start by choosing what this is about.</h2>
+        <p>
+          The category decides who reads your message first, so it is worth
+          thirty seconds. Everything else is on the form.
+        </p>
         <div>
-          <p className="statement-kicker">Route your enquiry</p>
-          <h2 className="section-title">Start in the right place.</h2>
-          <p className="section-copy">
-            Choose the closest route. Your selection travels with the form so the right desk can respond.
-          </p>
-          <div className="router-list">
-            {routes.map(({ title, hint, Icon }) => (
+          {INQUIRY_CATEGORIES.map((category, index) => {
+            const Icon = icons[index];
+            return (
               <button
-                className="router-button"
-                data-selected={selected === title ? "true" : "false"}
-                key={title}
                 type="button"
+                key={category}
+                data-selected={selected === category}
                 onClick={() => {
-                  setSelected(title);
+                  setSelected(category);
                   setSubmitted(false);
                 }}
               >
-                <Icon size={24} aria-hidden />
-                <div>
-                  <strong>{title}</strong>
-                  <span>{hint}</span>
-                </div>
-                <ArrowRight size={18} weight="bold" aria-hidden />
+                <Icon size={23} aria-hidden />
+                <span>{category}</span>
+                <ArrowRight size={18} aria-hidden />
               </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <form className="enquiry-form" onSubmit={handleSubmit}>
-            <div className="form-head">
-              <strong>{selected}</strong>
-              <span>Response route selected</span>
-            </div>
-            <div className="form-body">
-              <div className="form-field">
-                <label htmlFor="full-name">Full name</label>
-                <input id="full-name" name="fullName" autoComplete="name" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="email">Email</label>
-                <input id="email" name="email" type="email" autoComplete="email" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="phone">Phone</label>
-                <input id="phone" name="phone" type="tel" autoComplete="tel" />
-              </div>
-              <div className="form-field">
-                <label htmlFor="country">Country or region</label>
-                <input id="country" name="country" autoComplete="country-name" />
-              </div>
-              <div className="form-field">
-                <label htmlFor="enquiry-type">Programme or enquiry type</label>
-                <select id="enquiry-type" name="enquiryType" defaultValue="">
-                  <option value="" disabled>Select one</option>
-                  {ENQUIRY_TYPES.map((type) => <option key={type}>{type}</option>)}
-                </select>
-              </div>
-              <div className="form-field">
-                <label htmlFor="intake">Intended intake</label>
-                <input id="intake" name="intake" placeholder="For example, Winter 2026" />
-              </div>
-              <div className="form-field form-field-full">
-                <label htmlFor="message">What would you like to move forward?</label>
-                <textarea id="message" name="message" required />
-              </div>
-              <button className="form-submit" type="submit">
-                Send to the International Office
-              </button>
-            </div>
-          </form>
-          {submitted ? (
-            <div className="form-success" role="status">
-              <Check size={24} weight="bold" aria-hidden />
-              <span>
-                <strong>Your route is ready.</strong><br />
-                This prototype confirms the interaction. Connect the form endpoint before launch.
-              </span>
-            </div>
-          ) : null}
+            );
+          })}
         </div>
       </div>
+
+      <form className="contact-form" onSubmit={handleSubmit}>
+        <div className="form-selection">
+          <div>
+            <span>Selected inquiry</span>
+            <strong>{selected}</strong>
+          </div>
+          <a href="#inquiry">Change category</a>
+        </div>
+        <input type="hidden" name="category" value={selected} />
+
+        <div className="form-grid">
+          <label className="form-field form-field-wide">
+            Full name
+            <input name="fullName" autoComplete="name" required />
+          </label>
+          <label className="form-field">
+            Institutional email
+            <input name="email" type="email" autoComplete="email" required />
+          </label>
+          <label className="form-field">
+            Organization or department
+            <input name="organization" autoComplete="organization" required />
+          </label>
+          <label className="form-field">
+            Role
+            <input name="role" autoComplete="organization-title" required />
+          </label>
+          <label className="form-field">
+            Country or region
+            <input name="country" autoComplete="country-name" required />
+          </label>
+          <label className="form-field">
+            Program or initiative <span>(optional)</span>
+            <input name="program" />
+          </label>
+          <label className="form-field">
+            Proposed dates <span>(optional)</span>
+            <input name="dates" placeholder="For example, October 2026" />
+          </label>
+          <label className="form-field form-field-wide">
+            Message
+            <textarea name="message" rows={6} required />
+          </label>
+        </div>
+
+        <button type="submit" className="form-submit">Submit inquiry</button>
+
+        {submitted ? (
+          <div className="form-success" role="status">
+            <CheckCircle size={25} weight="fill" aria-hidden />
+            <div>
+              <strong>Your inquiry is ready.</strong>
+              <span>This local preview does not transmit data. Connect the approved University endpoint before launch.</span>
+            </div>
+          </div>
+        ) : null}
+      </form>
     </section>
   );
 }
