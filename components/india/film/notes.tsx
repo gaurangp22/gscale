@@ -100,7 +100,7 @@ const GLANCE = [
   { art: "window", big: "7–20 Dec", unit: "2026", note: "Galgotias University, Greater Noida" },
   { art: "days", big: "10–12", unit: "days", note: "Length varies by programme" },
   { art: "fee", big: "1,000–1,200", unit: "USD", note: "Per participant, bundled*" },
-  { art: "credits", big: "Up to 3", unit: "credits", note: "Subject to the home institution’s approval" },
+  { art: "credits", big: "3", unit: "credits recommended", note: "Subject to the home institution’s approval" },
 ];
 
 /* ── a mark for each programme, echoing its film ─────────────────── */
