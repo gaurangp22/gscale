@@ -87,7 +87,7 @@ function validate(step: StepId, a: Answers): string | null {
     case "programmes":
       return a.programmes.length ? null : "Choose at least one programme.";
     case "name":
-      return a.fullName.trim().split(/\s+/).length >= 2 ? null : "Please enter your full name.";
+      return a.fullName.trim() ? null : "Please enter your name.";
     case "email":
       return EMAIL.test(a.email.trim()) ? null : "That email doesn’t look quite right.";
     case "institution":
@@ -259,6 +259,23 @@ export function InterestForm({ initialProgramme }: { initialProgramme?: Programm
     if (i < list.length - 1) go(list[i + 1], 1);
   }, [step, go, submit]);
 
+  /* On the welcome screen, Enter begins from anywhere on the page: when
+     it first loads, focus is not yet inside the form. */
+  useEffect(() => {
+    if (step !== "welcome" || status === "done") return;
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key !== "Enter" || e.repeat || e.defaultPrevented) return;
+      const t = e.target as HTMLElement | null;
+      if (t?.closest(".eoi")) return; // the form's own handler has it
+      if (t && (t.tagName === "A" || t.tagName === "BUTTON" || t.tagName === "INPUT" || t.tagName === "TEXTAREA")) return;
+      e.preventDefault();
+      setTouched(true);
+      next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [step, status, next]);
+
   const back = useCallback(() => {
     const list = stepsFor(aRef.current);
     const i = list.indexOf(step);
@@ -287,8 +304,14 @@ export function InterestForm({ initialProgramme }: { initialProgramme?: Programm
     const t = e.target as HTMLElement;
     const typing = t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT";
     if (e.key === "Enter") {
-      if (t.tagName === "TEXTAREA" && !(e.metaKey || e.ctrlKey)) return;
-      if (t.tagName === "BUTTON" || t.tagName === "A" || (t.tagName === "INPUT" && (t as HTMLInputElement).type === "checkbox")) return;
+      if (e.repeat) return;
+      // in the notes box, Enter is a new line; Ctrl/Cmd/Alt + Enter moves on
+      if (t.tagName === "TEXTAREA" && !(e.metaKey || e.ctrlKey || e.altKey)) return;
+      // links and the action buttons keep their own Enter; on options
+      // (programmes, roles, TBC) Enter moves on and Space toggles
+      if (t.tagName === "A" || (t.tagName === "BUTTON" && !t.closest(".eoi-body"))) return;
+      // on the role question, Enter on an answer chooses it (and moves on)
+      if (step === "role" && t.tagName === "BUTTON") return;
       e.preventDefault();
       next();
       return;
@@ -460,7 +483,7 @@ export function InterestForm({ initialProgramme }: { initialProgramme?: Programm
               <textarea data-autofocus rows={4} value={a.notes} onChange={(e) => set("notes", e.target.value)} placeholder="Type here…" maxLength={1500} />
             </Field>
           ),
-          hint: "Ctrl + Enter to continue",
+          hint: "Ctrl + Enter or Alt + Enter to continue",
         };
       case "review": {
         const rows: Array<[string, string, StepId]> = [
