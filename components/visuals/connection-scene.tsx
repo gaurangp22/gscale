@@ -3,7 +3,7 @@
 import { Globe } from "./globe";
 import { AtlasFrame } from "./illustrations";
 import { Parallax } from "@/components/motion";
-import { GLOBE_ORIGIN, GLOBE_ROUTES } from "@/lib/site-content";
+import { GLOBE_DESTINATIONS, GLOBE_ORIGIN } from "@/lib/site-content";
 
 /**
  * The hero scene: a real coastline globe, set inside drafted atlas
@@ -18,14 +18,14 @@ export function ConnectionScene() {
       <Parallax className="connection-globe" speed={0.06}>
         <Globe
           origin={GLOBE_ORIGIN}
-          destinations={GLOBE_ROUTES}
+          destinations={GLOBE_DESTINATIONS}
           tone="dark"
         />
       </Parallax>
 
       <div className="connection-caption">
         <strong>Greater Noida</strong>
-        <span>Documented engagement routes</span>
+        <span>Our global network</span>
       </div>
 
       <div className="connection-legend" aria-hidden>

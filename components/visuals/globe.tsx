@@ -12,8 +12,18 @@ import { cn } from "@/lib/utils";
    re-projected onto a sphere every frame. Routes are true great circles,
    lifted off the surface so they arc rather than smear across it.
 
-   Canvas rather than SVG: ~3,000 dots plus seven animated arcs is far past
-   the point where per-node DOM updates hold 60fps.
+   Fourteen destinations all carry an arc. Keeping that legible rather than
+   cluttered is done in the drawing, not by dropping places:
+
+     · arcs fan apart — the lift cycles per route, so two destinations on a
+       similar bearing separate vertically instead of overlapping;
+     · the linework is hairline and translucent, so crossings read through
+       each other rather than stacking into a solid mass;
+     · labels are collision-tested and a name that would land on top of one
+       already drawn is skipped for that frame. The spin brings it back.
+
+   Canvas rather than SVG: ~3,000 dots plus fourteen animated arcs is far
+   past the point where per-node DOM updates hold 60fps.
    ───────────────────────────────────────────────────────────── */
 
 const DEG = Math.PI / 180;
@@ -98,10 +108,14 @@ export function Globe({
 
   const routes = useMemo(
     () =>
-      destinations.map((place) => ({
+      destinations.map((place, index) => ({
         place,
         a: toVec(origin.lat, origin.lng),
         b: toVec(place.lat, place.lng),
+        /* Cycling the lift is what separates neighbouring bearings: two
+           routes leaving India eastward take visibly different heights
+           instead of tracing each other. */
+        lift: 0.4 + (index % 3) * 0.11,
       })),
     [origin, destinations]
   );
@@ -256,44 +270,50 @@ export function Globe({
       const SEGMENTS = 96;
 
       routes.forEach((route, index) => {
-        // Each route draws itself in, then holds.
+        /* Each route draws itself in, then holds. Fourteen of them, so the
+           stagger is tighter than it was for six — the fan still builds in
+           sequence but finishes inside three seconds. */
         const drawIn = reduced
           ? 1
-          : Math.max(0, Math.min(1, (elapsed - 0.35 - index * 0.28) / 1.5));
+          : Math.max(0, Math.min(1, (elapsed - 0.3 - index * 0.13) / 1.3));
         if (drawIn <= 0) return;
 
         const limit = Math.floor(SEGMENTS * drawIn);
 
-        ctx.lineWidth = 1.4;
+        /* Hairline and translucent: where arcs cross they read through each
+           other instead of piling up into a solid shape. */
+        ctx.lineWidth = 1.1;
         ctx.lineCap = "round";
 
         for (let s = 0; s < limit; s++) {
           const t0 = s / SEGMENTS;
           const t1 = (s + 1) / SEGMENTS;
-          const p0 = project(arcPoint(route.a, route.b, t0, 0.55));
-          const p1 = project(arcPoint(route.a, route.b, t1, 0.55));
+          const p0 = project(arcPoint(route.a, route.b, t0, route.lift));
+          const p1 = project(arcPoint(route.a, route.b, t1, route.lift));
           if (p0.depth < -0.15 || p1.depth < -0.15) continue;
 
           const edge = Math.min(1, Math.max(0, (p0.depth + 0.15) / 0.35));
           ctx.beginPath();
           ctx.moveTo(p0.sx, p0.sy);
           ctx.lineTo(p1.sx, p1.sy);
-          ctx.strokeStyle = `rgba(${CRIMSON},${(0.85 * edge).toFixed(3)})`;
+          ctx.strokeStyle = `rgba(${CRIMSON},${(0.58 * edge).toFixed(3)})`;
           ctx.stroke();
         }
 
-        /* Traveling route marker. */
-        if (!reduced && drawIn >= 1) {
-          const cycle = (elapsed * 0.32 + index * 0.17) % 1;
-          const p = project(arcPoint(route.a, route.b, cycle, 0.55));
+        /* Traveling route marker. Fourteen pulses at once would be noise,
+           so only every third route carries one and the phase is spread
+           right around the cycle. */
+        if (!reduced && drawIn >= 1 && index % 3 === 0) {
+          const cycle = (elapsed * 0.3 + index * 0.37) % 1;
+          const p = project(arcPoint(route.a, route.b, cycle, route.lift));
           if (p.depth > 0) {
             ctx.beginPath();
-            ctx.arc(p.sx, p.sy, 3, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${CRIMSON},0.95)`;
+            ctx.arc(p.sx, p.sy, 2.4, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${CRIMSON},0.9)`;
             ctx.fill();
             ctx.beginPath();
-            ctx.arc(p.sx, p.sy, 6, 0, Math.PI * 2);
-            ctx.strokeStyle = `rgba(${CRIMSON},0.46)`;
+            ctx.arc(p.sx, p.sy, 5.4, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(${CRIMSON},0.36)`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -301,23 +321,38 @@ export function Globe({
       });
 
       /* ── Markers ───────────────────────────────────────────── */
-      const marker = (place: GlobePlace, isOrigin: boolean) => {
+      /* Boxes already claimed by a label this frame. A name whose box
+         overlaps one of these is dropped rather than overprinted — the spin
+         hands it back a moment later, so nothing is permanently hidden. */
+      const claimed: { x0: number; y0: number; x1: number; y1: number }[] = [];
+
+      const claim = (x0: number, y0: number, x1: number, y1: number) => {
+        for (const b of claimed) {
+          if (x0 < b.x1 && x1 > b.x0 && y0 < b.y1 && y1 > b.y0) return false;
+        }
+        claimed.push({ x0, y0, x1, y1 });
+        return true;
+      };
+
+      const marker = (place: GlobePlace, isOrigin: boolean, order: number) => {
         const p = project(toVec(place.lat, place.lng));
         if (p.depth <= 0.04) return;
 
         const fade = Math.min(1, p.depth * 2.6);
 
         if (!reduced) {
-          const ring = (elapsed * (isOrigin ? 0.75 : 0.5)) % 1;
+          /* Phases spread across the cycle so the pings read as scattered
+             activity rather than one synchronised blink. */
+          const ring = (elapsed * (isOrigin ? 0.75 : 0.42) + order * 0.29) % 1;
           ctx.beginPath();
-          ctx.arc(p.sx, p.sy, 3 + ring * (isOrigin ? 17 : 12), 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(${CRIMSON},${((1 - ring) * 0.5 * fade).toFixed(3)})`;
+          ctx.arc(p.sx, p.sy, 3 + ring * (isOrigin ? 17 : 10), 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${CRIMSON},${((1 - ring) * (isOrigin ? 0.5 : 0.38) * fade).toFixed(3)})`;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
 
         ctx.beginPath();
-        ctx.arc(p.sx, p.sy, isOrigin ? 3.4 : 2.4, 0, Math.PI * 2);
+        ctx.arc(p.sx, p.sy, isOrigin ? 3.4 : 2.2, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${CRIMSON},${fade.toFixed(3)})`;
         ctx.fill();
 
@@ -332,15 +367,19 @@ export function Globe({
         // Labels only once the marker is comfortably front-facing.
         if (p.depth > 0.34 && R > 120 && (width > 560 || isOrigin)) {
           const label = place.name.toUpperCase();
-          ctx.font = `500 ${isOrigin ? 11 : 10}px var(--font-mono-face), ui-monospace, monospace`;
+          ctx.font = `500 ${isOrigin ? 11 : 9.5}px var(--font-mono-face), ui-monospace, monospace`;
           ctx.textBaseline = "middle";
           const tx = p.sx + 11;
-          const labelOffset = place.name === "Hong Kong" ? 13 : place.name === "Shenzhen" ? -10 : 0;
-          const ty = p.sy - 9 + labelOffset;
+          const ty = p.sy - 9;
+          const w = ctx.measureText(label).width;
+
+          /* The origin draws first into an empty set, so it always wins its
+             space; everything after it takes the space only if still free. */
+          if (!claim(tx - 4, ty - 7, tx + w + 4, ty + 7)) return;
+
           ctx.fillStyle = `rgba(${ink},${(0.85 * fade).toFixed(3)})`;
           ctx.fillText(label, tx, ty);
 
-          const w = ctx.measureText(label).width;
           ctx.beginPath();
           ctx.moveTo(p.sx + 5, p.sy - 1);
           ctx.lineTo(tx - 2, ty + 1);
@@ -351,8 +390,10 @@ export function Globe({
         }
       };
 
-      routes.forEach((route) => marker(route.place, false));
-      marker(origin, true);
+      /* The origin claims its label first, so a destination can never push
+         Greater Noida's name off the map. */
+      marker(origin, true, 0);
+      routes.forEach((route, index) => marker(route.place, false, index));
     };
 
     raf = requestAnimationFrame(render);

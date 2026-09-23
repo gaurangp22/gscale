@@ -13,8 +13,11 @@ import { Photo, PhotoBand } from "@/components/photo";
 import { Magnetic, Parallax, SplitText, Spotlight } from "@/components/motion";
 import { Reveal, Stagger } from "@/components/reveal";
 import {
+  AuditoriumIllustration,
   CompassIllustration,
   DraftingIllustration,
+  FilamentIllustration,
+  TrailIllustration,
 } from "@/components/visuals/illustrations";
 import { Roster } from "@/components/roster";
 import { getTeamPhoto } from "@/lib/photos";
@@ -23,6 +26,7 @@ import {
   GSCALE_FRAMEWORK,
   OFFICE_COMMITMENTS,
   OFFICE_ROLES,
+  PRIORITIES,
   TEAM,
   TEAM_GROUPS,
 } from "@/lib/site-content";
@@ -34,6 +38,12 @@ export const metadata: Metadata = {
 };
 
 const roleIcons = [Path, Handshake, Buildings, CalendarBlank, Lightbulb, GlobeHemisphereWest];
+
+const priorityIllustrations = [
+  AuditoriumIllustration,
+  TrailIllustration,
+  FilamentIllustration,
+];
 
 export default function AboutPage() {
   return (
@@ -161,6 +171,41 @@ export default function AboutPage() {
           <Reveal className="framework-note" variant="fade">
             <p>{GSCALE_FRAMEWORK.premise}</p>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="priority-section section-pad" id="priorities">
+        <div className="site-shell">
+          <Reveal className="section-head">
+            <span className="eyebrow"><i />Priorities</span>
+            <h2 className="section-title">Three priorities shape the work.</h2>
+            <p className="section-lede">
+              Everything the office runs has to answer to at least one. Where an
+              opportunity answers to none of the three, however prestigious the
+              invitation, it is declined, and that happens more often than you
+              would expect.
+            </p>
+          </Reveal>
+          <Stagger className="priority-field">
+            {PRIORITIES.map((priority, index) => {
+              const Illustration = priorityIllustrations[index];
+              return (
+                <Spotlight
+                  as="article"
+                  key={priority.title}
+                  className="priority-item"
+                >
+                  <Illustration />
+                  <span className="priority-index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{priority.title}</h3>
+                  <p>{priority.text}</p>
+                  <p className="priority-detail">{priority.detail}</p>
+                </Spotlight>
+              );
+            })}
+          </Stagger>
         </div>
       </section>
 

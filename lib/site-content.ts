@@ -36,10 +36,10 @@ export const SITE = {
 export const NAV = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Mobility Programs", href: "/programs" },
-  { label: "Partnerships", href: "/partnerships" },
-  { label: "Innovation", href: "/innovation" },
-  { label: "Events & Delegations", href: "/events" },
+  { label: "Global Partnerships", href: "/partnerships" },
+  { label: "Our Programs", href: "/programs" },
+  { label: "Innovation @ GU", href: "/innovation" },
+  { label: "Events & Delegation", href: "/events" },
 ] as const;
 
 /* ═══ Records ═════════════════════════════════════════════════════════════ */
@@ -63,6 +63,24 @@ export const GLOBE_ROUTES = [
   { name: "Shenzhen", country: "China", lat: 22.54, lng: 114.06 },
   { name: "Goa", country: "India", lat: 15.3, lng: 74.12 },
 ] as const;
+
+/* The wider network the office is working across, drawn on the same footing
+   as the corridors above. Kept as its own list so the six with a completed
+   program behind them stay identifiable in the source even though the map
+   draws all fourteen alike. */
+export const GLOBE_NETWORK = [
+  { name: "Tashkent", country: "Uzbekistan", lat: 41.31, lng: 69.24 },
+  { name: "Kuala Lumpur", country: "Malaysia", lat: 3.14, lng: 101.69 },
+  { name: "Seoul", country: "South Korea", lat: 37.57, lng: 126.98 },
+  { name: "Shanghai", country: "China", lat: 31.23, lng: 121.47 },
+  { name: "Dubai", country: "United Arab Emirates", lat: 25.2, lng: 55.27 },
+  { name: "Riyadh", country: "Saudi Arabia", lat: 24.71, lng: 46.68 },
+  { name: "Budapest", country: "Hungary", lat: 47.5, lng: 19.04 },
+  { name: "Cape Town", country: "South Africa", lat: -33.92, lng: 18.42 },
+] as const;
+
+/** Everything the globe arcs to, and everything the home ticker names. */
+export const GLOBE_DESTINATIONS = [...GLOBE_ROUTES, ...GLOBE_NETWORK] as const;
 
 export const PREVIOUS_PROGRAMS = [
   {
@@ -118,9 +136,10 @@ export const COLLABORATION_OUTCOMES = [
 /* The award is the single strongest piece of evidence the office has, so it
    gets its own treatment rather than a line in a list. */
 export const FLAGSHIP = {
-  eyebrow: "EDVentures 2026 · Hong Kong",
+  eyebrow: "Innovation @ GU · EDVentures 2026, Hong Kong",
+  lede: "International exposure is the pathway this office builds for student entrepreneurship: the competitions, the panels and the rooms where an idea is read by people with no reason to be kind. We take Galgotias students and their innovation to the world, and they come back with a venture rather than a submission.",
   title: "Project TACTO was named Champion.",
-  text: "An assistive EdTech platform built by Galgotias students, TACTO makes coding reachable for blind and visually impaired learners: tactile, NFC-enabled coding blocks carrying Braille markers and audio feedback in place of a screen. It won among nineteen finalist teams from ten countries at one of Asia's leading education innovation competitions, and took the AWS Championship Prize. A second Galgotias entrant, Team Tekurious, also reached the finals.",
+  text: "An assistive EdTech platform built by Galgotias students, TACTO makes coding reachable for blind and visually impaired learners: tactile, NFC-enabled coding blocks carrying Braille markers and audio feedback in place of a screen. G-SCALE put it on a stage in Hong Kong, where it won among nineteen finalist teams from ten countries at one of Asia's leading education innovation competitions and took the AWS Championship Prize. A second Galgotias entrant, Team Tekurious, also reached the finals. Both went out as student projects and came back as ventures with an audience.",
   quote:
     "Innovation grows when ideas are exposed to new perspectives. It inspired us to build with greater purpose and a truly global vision.",
   attribution: "Gaurang Pant, Founder and CEO, Project TACTO",
@@ -611,22 +630,21 @@ export const EVENT_PROPOSAL = [
   },
 ] as const;
 
-export const PRACTICE = [
+export const PROGRAM_ASPECTS = [
   {
-    title: "A term that does not look like the last one",
-    text: "You join a cohort drawn from several institutions, taught by people who have never seen your transcript and assessed against expectations nobody has spelled out. It is uncomfortable for roughly a week. That week is most of the value.",
+    tab: "Challenge",
+    title: "A complex, interdisciplinary challenge",
+    text: "Every program is built around a problem that does not fit inside one syllabus. On the NTU ASEAN Summer Program that meant food redistribution in Singapore and solar-powered water purification in the Mekong Delta: two countries, two working prototypes, and no single discipline that could finish either.",
   },
   {
-    title: "Faculty who bring the outside in",
-    text: "Staff come back from a collaboration with a reading list, a contact, a way of running a seminar they had not seen before. Most of the benefit lands on students who never left Greater Noida.",
+    tab: "Industry",
+    title: "Prominent industry partners in the room",
+    text: "Not sponsors on a banner. The iOS Student Developer Program runs inside the iOS Development Centre built with Apple and Infosys; drone work runs with Drone Destination; ventures taken to Hong Kong were judged and backed by AWS. Participants build against a real client and are assessed by one.",
   },
   {
-    title: "Work tested somewhere it is not already believed in",
-    text: "A venture that convinces a room on campus is not yet convincing. In Hong Kong and Jakarta, Galgotias student ventures were read by panels with no reason to be kind, and one of them won.",
-  },
-  {
-    title: "Relationships that outlast the agreement",
-    text: "The signing photograph is the least interesting part of any partnership. What counts is the second cohort, the joint paper, the return visit, the things that only happen when the first round went well.",
+    tab: "Cohort",
+    title: "A global cohort to team with",
+    text: "You join a group drawn from several institutions, taught by people who have never seen your transcript. Galgotias students have worked inside ASEAN cohorts in Singapore and Cambridge cohorts at Girton College, and hosted students from NTU Singapore and Villa College, Maldives here in Greater Noida.",
   },
 ] as const;
 
@@ -712,37 +730,31 @@ export const TEAM_GROUPS = ["Leadership", "The office", "Student team"] as const
 
 export const AUDIENCES = [
   {
-    label: "For students",
-    title: "You want an academic experience outside this campus",
+    label: "For GU students",
+    title: "Study, build and compete beyond this campus",
     points: [
-      "Outbound programs with NTU Singapore, Cambridge and international competitions",
-      "Nomination through your department, then profile review and interview",
-      "Merit-based financial support on some programs, confirmed at final nomination",
-      "A record of what previous cohorts actually built and where",
+      "Outbound programs with Cambridge, NTU Singapore and international competitions",
+      "Nomination runs through your department; how to apply is set out in full on the mobility page",
     ],
     action: "See mobility programs",
     href: "/programs",
   },
   {
-    label: "For partner institutions",
-    title: "You want to send participants to Galgotias University",
+    label: "For students coming to GU",
+    title: "Spend a short term inside Galgotias University",
     points: [
-      "The iOS Student Developer Program, built around Apple and Infosys facilities",
-      "The Winter Short-Term Exchange Program, thematic and project-based",
-      "Nomination-based entry: these are not routes into a Galgotias degree",
-      "Learning outcomes agreed with your academics before the cohort arrives",
+      "Hosted programs at the iOS Development Centre, plus the Winter Short-Term Exchange",
+      "Nomination-based entry, with learning outcomes agreed before the cohort arrives",
     ],
     action: "See inbound programs",
     href: "/programs#inbound",
   },
   {
-    label: "For universities and organizations",
-    title: "You want to build something with us",
+    label: "For partner institutions and organizations",
+    title: "Build something with us",
     points: [
       "Mobility, joint research, curriculum development and innovation collaboration",
-      "Access to specialist centers in iOS development, cybersecurity, manufacturing and UAV systems",
-      "Academic forums, workshops and institutional visits",
-      "A first conversation that ends in a decision rather than another meeting",
+      "One office, one conversation, and a first meeting that ends in a decision",
     ],
     action: "Explore partnership",
     href: "/partnerships",

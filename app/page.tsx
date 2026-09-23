@@ -3,82 +3,72 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { ConnectionScene } from "@/components/visuals/connection-scene";
-import {
-  AuditoriumIllustration,
-  FilamentIllustration,
-  TrailIllustration,
-} from "@/components/visuals/illustrations";
 import { Photo, PhotoBand } from "@/components/photo";
 import { Magnetic, Parallax, SplitText, Spotlight } from "@/components/motion";
 import { Reveal, Stagger } from "@/components/reveal";
 import { StackDeck } from "@/components/stack-deck";
-import { RecordMarquee } from "@/components/record-marquee";
+import { FilmReel, type ReelFrame } from "@/components/film-reel";
 import {
   AUDIENCES,
+  COLLABORATION_AREAS,
   FLAGSHIP,
-  GLOBE_ROUTES,
-  PRACTICE,
-  PRIORITIES,
+  GLOBE_DESTINATIONS,
+  PROGRAM_ASPECTS,
 } from "@/lib/site-content";
 import { PHOTOS, type PhotoKey } from "@/lib/photography";
 
-const priorityIllustrations = [
-  AuditoriumIllustration,
-  TrailIllustration,
-  FilamentIllustration,
-];
-
+/* The three categories the events page files everything under. One record
+   each, most recent first, so the reader learns the shape of the archive
+   before they open it. */
 const recentActivity = [
   {
-    type: "Outbound program",
+    type: "Mobility programs",
     title: "Cambridge Global Summer Program 2026",
     text: "Two residential weeks at Girton College in venture thinking, frugal AI and public speaking, closing with a London immersion visit.",
     photo: "campus" satisfies PhotoKey,
     href: "/programs#archive",
   },
   {
-    type: "Student ventures",
-    title: "Global Startup and Development Congress, Jakarta",
-    text: "Three Galgotias ventures presented (CarbonSynq Earth, Project TACTO and ReGrub), and two students joined a panel on access to sustainability careers.",
-    photo: "congress" satisfies PhotoKey,
+    type: "Conferences and seminars",
+    title: "Global Sustainable Development Congress, Jakarta",
+    text: "Four days on climate and energy transition, sustainable cities, education equality and ESG frameworks, alongside the live reveal of the THE Impact Rankings.",
+    photo: "conference" satisfies PhotoKey,
     href: "/events#participate",
   },
   {
-    type: "Hosted program",
+    type: "Events and collaborations",
     title: "iOS Student Developer Program 2025",
-    text: "The inaugural inbound cohort: students from NTU Singapore and Villa College, Maldives, hosted for a fortnight at the iOS Development Center and pitching to panels at the end of it.",
+    text: "The inaugural inbound cohort: students from NTU Singapore and Villa College, Maldives, hosted for a fortnight at the iOS Development Centre with Apple and Infosys.",
     photo: "developers" satisfies PhotoKey,
     href: "/events#organize",
   },
 ] as const;
 
-const practicePhotos = ["cohort", "studyGroup", "workshop", "meetingRoom"] as const;
+const programPhotos = ["workshop", "developers", "cohort"] as const;
 
-const practiceTabs = ["Term", "Faculty", "Ventures", "Relationships"] as const;
+/* G-SCALE as it looks on the ground. The captions carry the claim; the
+   pictures are stand-ins until the office's own documentary photography
+   lands, and swapping them is a one-line edit in lib/photography.ts. */
+const REEL_FRAMES: readonly ReelFrame[] = [
+  { photo: "teaching", caption: "Active, student-centred teaching across every school" },
+  { photo: "workshop", caption: "Innovation workshops where students own the problem" },
+  { photo: "studentsLaptops", caption: "Inbound cohorts building alongside Galgotias students" },
+  { photo: "cohort", caption: "Cohorts drawn from more than one institution" },
+  { photo: "developers", caption: "Applied technical work at the iOS Development Centre" },
+  { photo: "congress", caption: "Student ventures presented on international stages" },
+  { photo: "studyGroup", caption: "Collaborative work across cohorts and disciplines" },
+  { photo: "graduation", caption: "Where a G-SCALE education is meant to arrive" },
+];
 
-/* Institutions named in the record — drawn only from documented programs,
-   events and prizes elsewhere on this site. Context tags say where. */
-const RECORD_NAMES = [
-  { name: "University of Cambridge", context: "Girton College · Outbound 2026" },
-  { name: "Nanyang Technological University", context: "ASEAN Summer Program · 2025" },
-  { name: "Villa College, Maldives", context: "Inbound program · 2025" },
-  { name: "Apple", context: "iOS Development Centre" },
-  { name: "Infosys", context: "iOS Development Centre" },
-  { name: "Drone Destination Pvt. Ltd.", context: "Industry collaboration" },
-  { name: "QS", context: "India & China Summits · 2025-26" },
-  { name: "Times Higher Education", context: "Impact Rankings reveal · 2026" },
-  { name: "Amazon Web Services", context: "Championship Prize · EDVentures 2026" },
-  { name: "EDVentures Hong Kong", context: "Innovation competition · 2026" },
-  { name: "Global Startup & Development Congress", context: "Jakarta" },
+/* The three commitments underneath "students at the centre". Each carries a
+   scannable tag so the rail reads at a glance. */
+const LEARNING_PILLARS = [
+  { term: "Agency", detail: "Cultivating learner agency and active participation" },
+  { term: "Opportunity", detail: "Curating rich and purposeful global opportunities" },
+  { term: "Leadership", detail: "Developing future leaders and creators" },
 ] as const;
 
-const INTRO_FACTS = [
-  { term: "Outbound", detail: "Short-term study, research and innovation with partner institutions" },
-  { term: "Inbound", detail: "Nominated participants hosted at Greater Noida" },
-  { term: "Collaboration", detail: "Joint research, curriculum work, forums and delegations" },
-] as const;
-
-const tickerItems = GLOBE_ROUTES.map((route) => `${route.name} · ${route.country}`);
+const tickerItems = GLOBE_DESTINATIONS.map((route) => `${route.name} · ${route.country}`);
 
 export default function HomePage() {
   return (
@@ -100,32 +90,26 @@ export default function HomePage() {
               />
             </h1>
 
+            <p className="hero-lede">
+              Connecting the world with India&rsquo;s higher education.
+            </p>
+
             <p>
-              International opportunities for learning and collaboration:
-              mobility programs, institutional partnerships, academic forums and
-              visiting delegations, coordinated from Greater Noida.
+              Join our network of global academic collaborations and
+              partnerships.
             </p>
 
             <div className="hero-actions">
               <Magnetic>
                 <Link href="/programs" className="button button-primary">
-                  Explore programs <ArrowRight size={17} weight="bold" />
+                  Our Programs <ArrowRight size={17} weight="bold" />
                 </Link>
               </Magnetic>
               <Magnetic>
                 <Link href="/partnerships" className="button button-secondary">
-                  Partner with G-SCALE <ArrowRight size={17} weight="bold" />
+                  Global Partnerships <ArrowRight size={17} weight="bold" />
                 </Link>
               </Magnetic>
-            </div>
-
-            <div className="hero-meta">
-              <span>
-                <strong>{GLOBE_ROUTES.length}</strong> documented route corridors
-              </span>
-              <span>
-                <strong>Outbound &amp; inbound</strong> short-term mobility
-              </span>
             </div>
           </div>
 
@@ -138,19 +122,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Where the routes actually go — a ticker of documented corridors. */}
-      <div className="route-ticker" aria-hidden>
-        <div className="route-ticker-track">
-          {[...tickerItems, ...tickerItems].map((item, index) => (
-            <span key={index}>
-              {item}
-              <i />
-            </span>
-          ))}
+      {/* The corridors the globe above is drawing, named. The title is what
+          makes the strip mean something rather than scroll past. */}
+      <div className="route-ticker">
+        <span className="route-ticker-title">Our Global Network</span>
+        <div className="route-ticker-viewport" aria-hidden>
+          <div className="route-ticker-track">
+            {[...tickerItems, ...tickerItems].map((item, index) => (
+              <span key={index}>
+                {item}
+                <i />
+              </span>
+            ))}
+          </div>
         </div>
       </div>
       <span className="sr-only">
-        Documented route corridors: {tickerItems.join(", ")}.
+        Our global network: {tickerItems.join(", ")}.
       </span>
 
       <section className="intro-statement section-pad rule-grid">
@@ -159,99 +147,96 @@ export default function HomePage() {
             <span className="eyebrow"><i />The work</span>
             <SplitText
               as="h2"
-              text="Learning that extends beyond borders."
-              accent="beyond borders."
+              text="Students at the centre of learning @ GU"
+              accent="@ GU"
             />
             <dl className="intro-facts">
-              {INTRO_FACTS.map((fact) => (
-                <div key={fact.term}>
-                  <dt>{fact.term}</dt>
-                  <dd>{fact.detail}</dd>
+              {LEARNING_PILLARS.map((pillar) => (
+                <div key={pillar.term}>
+                  <dt>{pillar.term}</dt>
+                  <dd>{pillar.detail}</dd>
                 </div>
               ))}
             </dl>
           </Reveal>
 
           <Reveal variant="fade" delay={120}>
-            {/* What this office is *for* is defined once, on the about page.
-                Home does the other job: naming where the work actually goes. */}
             <p className="lede">
-              G-SCALE is where Galgotias University turns internationalisation
-              into academic practice. It connects teaching, research,
-              innovation and institutional strategy with partners beyond
-              India—through joint academic work, faculty engagement, visiting
-              delegations, global forums, competitions and student mobility.
+              Galgotias Student Centered Active Learning Ecosystem (G-SCALE) is
+              a comprehensive transformation of how teaching and learning is
+              carried out at GU. Focused on students and their active
+              participation in their own learning, our goal is to create a
+              conducive environment where students thrive as a key stakeholder
+              in how learning should be experienced and developed.
             </p>
             <p>
-              The work begins with a real academic need: a partner for a
-              research question, a collaborator for a course, an international
-              stage for student innovation, or a relationship that can grow
-              beyond a single visit. G-SCALE brings the right people together,
-              shapes the collaboration and carries it from first conversation
-              to measurable outcome.
+              The G-SCALE International Office&rsquo;s role is to connect
+              purposeful learning opportunities globally, so students develop
+              the skills, capabilities and knowledge to shape a better future.
             </p>
             <p>
-              Everything below is part of that wider record: how the University
-              builds lasting global relationships and turns them into
-              opportunities, knowledge and institutional impact.
+              Through key program offerings and initiatives in collaboration
+              with global partner institutions, we seek to co-create knowledge
+              that adds value to all.
             </p>
           </Reveal>
         </div>
-
-        {/* The record, in names — where the work has already run. */}
-        <RecordMarquee entries={RECORD_NAMES} />
       </section>
 
-      <section className="priority-section section-pad">
-        <div className="site-shell">
-          <Reveal className="section-head">
-            <span className="eyebrow"><i />Priorities</span>
-            <h2 className="section-title">Three priorities shape the work.</h2>
-            <p className="section-lede">
-              Everything the office runs has to answer to at least one. Where an
-              opportunity answers to none of the three, however prestigious the
-              invitation, it is declined, and that happens more often than you
-              would expect.
-            </p>
-          </Reveal>
-          <Stagger className="priority-field">
-            {PRIORITIES.map((priority, index) => {
-              const Illustration = priorityIllustrations[index];
-              return (
-                <Spotlight
-                  as="article"
-                  key={priority.title}
-                  className="priority-item"
-                >
-                  <Illustration />
-                  <span className="priority-index">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3>{priority.title}</h3>
-                  <p>{priority.text}</p>
-                  <p className="priority-detail">{priority.detail}</p>
-                </Spotlight>
-              );
-            })}
-          </Stagger>
-        </div>
-      </section>
+      {/* What that transformation looks like on the ground, as a strip of
+          film rather than a wall of institution names. */}
+      <FilmReel frames={REEL_FRAMES} label="G-SCALE in practice" />
 
-      <PhotoBand name="graduation">
-        <span className="eyebrow eyebrow-light"><i />In practice</span>
-        <h2>An international education is a set of specific experiences.</h2>
+      {/* ═══ Global Partnerships ═══════════════════════════════════════ */}
+
+      <PhotoBand name="roundtable">
+        <span className="eyebrow eyebrow-light"><i />Global Partnerships</span>
+        <h2>A shared purpose brings us together to mould and shape education futures.</h2>
         <p>
-          Not a stamp in a passport. Below is what the work looks like when it
-          is doing its job.
+          A network of institutions, expertise and ideas, co-creating
+          meaningful learning opportunities for all.
         </p>
       </PhotoBand>
 
-      {/* The four experiences, filed on top of each other as you scroll —
-          each sheet pins under the nav and the next slides over it. */}
-      <section className="practice-section section-pad" aria-label="In practice">
+      <section className="partnership-preview section-pad">
         <div className="site-shell">
+          <Stagger className="partnership-preview-grid">
+            {COLLABORATION_AREAS.map((area, index) => (
+              <Spotlight as="article" className="partnership-preview-item" key={area.title}>
+                <em>{String(index + 1).padStart(2, "0")}</em>
+                <h3>{area.title}</h3>
+                <p>{area.outcome}</p>
+              </Spotlight>
+            ))}
+          </Stagger>
+          <Link href="/partnerships" className="text-link">
+            Explore global partnerships <ArrowRight size={17} weight="bold" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ═══ Our Programs ══════════════════════════════════════════════ */}
+
+      {/* Three sheets, filed on top of each other as you scroll — one per
+          thing a participant actually gets out of a program. */}
+      <section className="practice-section section-pad" id="programs">
+        <div className="site-shell">
+          <Reveal className="section-head">
+            <span className="eyebrow"><i />Our Programs</span>
+            <SplitText
+              as="h2"
+              className="section-title"
+              text="Some learning only happens when we take the first steps out."
+              accent="the first steps out."
+            />
+            <p className="section-lede">
+              Through our curated programs, meet challenges, peers and
+              opportunities that will broaden your outlook on this world.
+            </p>
+          </Reveal>
+
           <StackDeck>
-            {PRACTICE.map((item, index) => (
+            {PROGRAM_ASPECTS.map((item, index) => (
               <article
                 className="stack-card practice-card"
                 key={item.title}
@@ -259,13 +244,13 @@ export default function HomePage() {
               >
                 <span className="practice-tab" aria-hidden>
                   <em>{String(index + 1).padStart(2, "0")}</em>
-                  {practiceTabs[index]}
+                  {item.tab}
                 </span>
 
                 <div className="practice-media">
                   <Image
-                    src={PHOTOS[practicePhotos[index]].src}
-                    alt={PHOTOS[practicePhotos[index]].alt}
+                    src={PHOTOS[programPhotos[index]].src}
+                    alt={PHOTOS[programPhotos[index]].alt}
                     fill
                     sizes="(max-width: 900px) 100vw, 44vw"
                     className="practice-media-img"
@@ -286,15 +271,22 @@ export default function HomePage() {
               </article>
             ))}
           </StackDeck>
+
+          <Link href="/programs" className="text-link deck-link">
+            See all mobility programs <ArrowRight size={17} weight="bold" />
+          </Link>
         </div>
       </section>
 
-      {/* The single strongest piece of evidence the office has. Home tells it
-          once, at length; the events page carries it as a dated record. */}
+      {/* ═══ Innovation @ GU ═══════════════════════════════════════════ */}
+
+      {/* International exposure as a pathway into entrepreneurship, told
+          through the single strongest piece of evidence the office has. */}
       <section className="flagship-section">
         <div className="site-shell flagship-layout">
           <Reveal className="flagship-copy">
             <span className="eyebrow eyebrow-light"><i />{FLAGSHIP.eyebrow}</span>
+            <p className="flagship-lede">{FLAGSHIP.lede}</p>
             <SplitText as="h2" text={FLAGSHIP.title} accent="Champion." />
             <p>{FLAGSHIP.text}</p>
             <blockquote>
@@ -314,54 +306,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* One door-picker, not two. The route index that used to sit above
-          this section asked the same question of the same three readers and
-          sent them to the same three pages. */}
-      <section className="audience-section section-pad">
-        <div className="site-shell">
-          <Reveal className="section-head">
-            <span className="eyebrow"><i />Start here</span>
-            <h2 className="section-title">Find the door that is yours.</h2>
-            <p className="section-lede">
-              Three ways people arrive at this office, and what each one should
-              read first. If none of them fits, the events record is the fourth
-              door and the office is the fifth.
-            </p>
-          </Reveal>
-          <Stagger className="audience-grid">
-            {AUDIENCES.map((audience) => (
-              <Spotlight as="article" className="audience-card" key={audience.label}>
-                <span className="audience-label">{audience.label}</span>
-                <h3>{audience.title}</h3>
-                <ul>
-                  {audience.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-                <Link href={audience.href} className="text-link">
-                  {audience.action} <ArrowRight size={16} weight="bold" />
-                </Link>
-              </Spotlight>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+      {/* ═══ Events & Delegation ═══════════════════════════════════════ */}
 
-      {/* The open-calls board lives on the mobility page, where somebody
-          hunting for one will look. Home carries the status, not a second
-          copy of the board. */}
       <section className="activity-section section-pad">
         <div className="site-shell">
           <Reveal className="activity-heading">
-            <span className="eyebrow"><i />Recent record</span>
-            <h2>Recent programs, collaborations and events</h2>
-            <p>
-              Three of the most recent, each linking to its full record.
-              Nothing is open for application this month; confirmed calls
-              appear on the{" "}
-              <Link href="/programs#current">mobility page</Link> as they are
-              settled.
-            </p>
+            <span className="eyebrow"><i />Events &amp; Delegation</span>
+            <h2>Recent Events and Delegation</h2>
           </Reveal>
           <Stagger className="activity-grid">
             {recentActivity.map((activity) => (
@@ -386,6 +337,36 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ Explore Opportunities ═════════════════════════════════════ */}
+
+      {/* The last thing on the page is the door-picker: three ways in,
+          named for who is standing in each one. */}
+      <section className="audience-section section-pad">
+        <div className="site-shell">
+          <Reveal className="section-head">
+            <span className="eyebrow"><i />Explore opportunities</span>
+            <h2 className="section-title">
+              Step in to our G-SCALE International Office.
+            </h2>
+          </Reveal>
+          <Stagger className="audience-grid">
+            {AUDIENCES.map((audience) => (
+              <Spotlight as="article" className="audience-card" key={audience.label}>
+                <span className="audience-label">{audience.label}</span>
+                <h3>{audience.title}</h3>
+                <ul>
+                  {audience.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+                <Link href={audience.href} className="text-link">
+                  {audience.action} <ArrowRight size={16} weight="bold" />
+                </Link>
+              </Spotlight>
+            ))}
+          </Stagger>
+        </div>
+      </section>
     </>
   );
 }

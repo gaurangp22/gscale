@@ -4,6 +4,7 @@ import "./site.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { CursorRing, PageRail } from "@/components/chrome";
+import { ChromeGate } from "@/components/chrome-gate";
 
 const geist = localFont({
   src: "./fonts/geist-latin.woff2",
@@ -57,11 +58,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         <a href="#main-content" className="skip-link">Skip to main content</a>
-        <Navbar />
-        <PageRail />
+        <ChromeGate>
+          <Navbar />
+          <PageRail />
+        </ChromeGate>
         <main id="main-content">{children}</main>
-        <Footer />
-        <CursorRing />
+        <ChromeGate>
+          <Footer />
+          <CursorRing />
+        </ChromeGate>
       </body>
     </html>
   );

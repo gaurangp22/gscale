@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowUp,
   EnvelopeSimple,
@@ -8,41 +7,6 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { CampusNight, OfficeClock } from "@/components/footer-live";
 import { SITE } from "@/lib/site-content";
-
-/* Deep links rather than a mirror of the primary nav — a footer earns its
-   height by getting somebody one level further in than the header can. */
-const COLUMNS = [
-  {
-    index: "01",
-    heading: "Mobility",
-    links: [
-      { label: "Outbound programs", href: "/programs#outbound" },
-      { label: "Inbound programs", href: "/programs#inbound" },
-      { label: "The full catalog", href: "/programs#catalog" },
-      { label: "Previous programs", href: "/programs#archive" },
-    ],
-  },
-  {
-    index: "02",
-    heading: "Partner with us",
-    links: [
-      { label: "Areas of collaboration", href: "/partnerships" },
-      { label: "Industry tie-ups", href: "/partnerships#start" },
-      { label: "Events and delegations", href: "/events" },
-      { label: "Propose an event", href: "/events#organize" },
-    ],
-  },
-  {
-    index: "03",
-    heading: "The office",
-    links: [
-      { label: "What G-SCALE stands for", href: "/about#framework" },
-      { label: "Our role", href: "/about#role" },
-      { label: "The people who answer", href: "/about#people" },
-      { label: "How we answer inquiries", href: "/contact" },
-    ],
-  },
-] as const;
 
 export function Footer() {
   return (
@@ -68,18 +32,6 @@ export function Footer() {
             </div>
             <OfficeClock />
           </div>
-
-          {COLUMNS.map((column) => (
-            <nav className="footer-links" key={column.heading} aria-label={column.heading}>
-              <strong>
-                <i>{column.index}</i>
-                {column.heading}
-              </strong>
-              {column.links.map((link) => (
-                <Link href={link.href} key={link.href}>{link.label}</Link>
-              ))}
-            </nav>
-          ))}
         </div>
 
         {/* The campus after hours. The office window is lit only while the
